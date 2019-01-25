@@ -29,6 +29,21 @@ const raycast = (element, {targetX, targetY}, elementsToConsider) => {
 
 }
 
+const isVisible = (el) => {
+    const rect = el.getBoundingClientRect(), top = rect.top, height = rect.height
+    if (rect.bottom < 0) return false
+    if (top > document.documentElement.clientHeight) return false
+    let currentElement = el.parentNode
+    do {
+        const parentRect = currentElement.getBoundingClientRect()
+        if (top <= parentRect.bottom === false) return false
+        if ((top + height) <= parentRect.top) return false
+        currentElement = currentElement.parentNode
+    } while (currentElement !== document.body)
+    return true
+}
+
 export {
-    clamp
+    clamp,
+    isVisible
 }

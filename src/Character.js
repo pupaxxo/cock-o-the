@@ -1,5 +1,6 @@
 import './Character.css'
-import { clamp } from './Utils'
+import Image from './Character.svg'
+import {clamp, isVisible} from './Utils'
 
 class Character {
 
@@ -36,6 +37,10 @@ class Character {
     
     reDraw() {
         this.element.style = `top: ${this.y}px; left: ${this.x}px`
+        if (isVisible(this.element)) {
+            console.log('ok')
+        }
+        console.log(isVisible(this.element) ? 'Visible' : 'Not visible')
     }
 
     stopListener() {
