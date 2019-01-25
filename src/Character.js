@@ -24,16 +24,16 @@ class Character {
     }
 
     keyListener(e) {
-        if (e.keyCode === '38') {
+        if (e.keyCode === 38) {
             this.y -= this.speed
         }
-        else if (e.keyCode === '40') {
+        else if (e.keyCode === 40) {
             this.y += this.speed
         }
-        else if (e.keyCode === '37') {
+        else if (e.keyCode === 37) {
            this.x -= this.speed
         }
-        else if (e.keyCode === '39') {
+        else if (e.keyCode === 39) {
            this.x += this.speed
         }
 
