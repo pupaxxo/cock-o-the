@@ -1,4 +1,5 @@
 import Character from './Character'
+import './Game.css'
 
 class Game {
 
