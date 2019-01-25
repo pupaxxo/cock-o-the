@@ -1,6 +1,5 @@
 import './Character.css'
 import { clamp } from './Utils'
-import Image from './Character.svg'
 
 class Character {
 
