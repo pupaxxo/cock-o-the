@@ -1,7 +1,6 @@
 #game-character {
     width: 60px;
     height: 80px;
-    background-color: white;
     position: absolute;
     transition: all .1s;
     z-index: 6000;
