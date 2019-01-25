@@ -5,7 +5,7 @@ const clamp = (v, min, max) => {
     return v;
 }
 
-const raycast = ({originX, originY}, {targetX, targetY}, elementsToConsider) => {
+const raycast = ({originX, originY}, {targetX, targetY}, isOk) => {
 
     let step = 1
 
@@ -18,7 +18,7 @@ const raycast = ({originX, originY}, {targetX, targetY}, elementsToConsider) => 
     if (endX - startX === 0 ){
         for(let y = startY; y <= endY; y += step){
             let found = document.elementFromPoint(startX - window.scrollX, y - window.scrollY)
-            if (found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())) {
+            if (found !== null && found !== undefined && isOk(found.tagName.toLowerCase())) {
                 return true
             }
         }
@@ -27,7 +27,7 @@ const raycast = ({originX, originY}, {targetX, targetY}, elementsToConsider) => 
         for (let x = startX; x <= endX; x += step) {
             let y = (slope * x)
             let found = document.elementFromPoint(x - window.scrollX, y - window.scrollY)
-            if (found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())) {
+            if (found !== null && found !== undefined && isOk(found.tagName.toLowerCase())) {
                 return true
             }
         }
