@@ -15,7 +15,7 @@ class Character {
     maxWidth = null
 
     constructor() {
-        document.body.innerHTML = document.body.innerHTML + `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
+        document.getElementById('game-container').innerHTML = document.getElementById('game-container').innerHTML + `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
