@@ -8,10 +8,20 @@ class Character {
     y = 0
     speed = 100
 
+    listener = null
+    pressed = null
+
     constructor() {
         document.writeln('<div id="game-character"></div>')
         this.element = document.getElementById('game-character')
-        document.onkeydown = (e) => this.keyListener(e)
+        document.onkeydown = (e) => this.onKeyDown(e)
+        document.onkeyup = (e) => {
+            if (this.listener) {
+                this.pressed = null
+                clearTimeout(this.listener)
+                this.listener = null
+            }
+        }
         window.onresize = () => {
             this.fixPg()
             this.reDraw()
@@ -23,23 +33,32 @@ class Character {
         this.element.style = `top: ${this.y}px; left: ${this.x}px`
     }
 
-    keyListener(e) {
-        if (e.keyCode === 38) {
-            this.y -= this.speed
-        }
-        else if (e.keyCode === 40) {
-            this.y += this.speed
-        }
-        else if (e.keyCode === 37) {
-           this.x -= this.speed
-        }
-        else if (e.keyCode === 39) {
-           this.x += this.speed
+    onKeyDown(e) {
+
+        if (this.listener) return
+
+        this.pressed = e.keyCode
+
+        const func = () => {
+            if (this.pressed === 38) {
+                this.y -= this.speed
+            }
+            else if (this.pressed === 40) {
+                this.y += this.speed
+            }
+            else if (this.pressed === 37) {
+               this.x -= this.speed
+            }
+            else if (this.pressed === 39) {
+               this.x += this.speed
+            }
+
+            this.fixPg()
+            this.reDraw()
+            this.listener = setTimeout(func, 100)
         }
 
-        this.fixPg();
-
-        this.reDraw()
+        this.listener = setTimeout(func)
     }
 
     fixPg() {
