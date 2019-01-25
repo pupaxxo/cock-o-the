@@ -16,11 +16,8 @@ class Character {
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
-            if (this.listener) {
-                this.pressed = null
-                clearTimeout(this.listener)
-                this.listener = null
-            }
+            if (this.pressed === e.keyCode)
+            this.stopListener()
         }
         window.onresize = () => {
             this.fixPg()
@@ -33,9 +30,20 @@ class Character {
         this.element.style = `top: ${this.y}px; left: ${this.x}px`
     }
 
+    stopListener() {
+        if (this.listener) {
+            this.pressed = null
+            clearTimeout(this.listener)
+            this.listener = null
+        }
+    }
+
     onKeyDown(e) {
 
-        if (this.listener) return
+        if (![38, 40, 37, 39].includes(e.keyCode)) return
+
+        if (this.listener && this.pressed === e.keyCode) return
+        this.stopListener()
 
         this.pressed = e.keyCode
 
