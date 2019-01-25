@@ -67,6 +67,12 @@ module.exports = {
       }),
     new CopyWebpackPlugin([{
       from: "public/manifest.json"
+    }, {
+      from: "public/icon16.png"
+    }, {
+      from: "public/icon48.png"
+    }, {
+      from: "public/icon128.png"
     }])
   ]
 };

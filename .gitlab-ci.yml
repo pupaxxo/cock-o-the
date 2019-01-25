@@ -1,0 +1,17 @@
+image: node
+
+before_script:
+  - yarn
+
+stages:
+  - deploy
+
+deployExtension:
+  stage: deploy
+  when: manual
+  only:
+    - master #to be invoked only on master merge
+  script:
+    - sed -i 's/%version%/$CI_PIPELINE_IID' public/manifest.json
+    - yarn build
+    - yarn deploy
