@@ -5,26 +5,36 @@ const clamp = (v, min, max) => {
     return v;
 }
 
-const raycast = (element, {targetX, targetY}, elementsToConsider) => {
-    let elementCenter = {
-        x: element.getBoundingClientRect().left,
-        y: element.getBoundingClientRect().top
-    }
+const raycast = ({originX, originY}, {targetX, targetY}, elementsToConsider) => {
+
     let step = 1
-    let startX = elementCenter.x < targetX ? elementCenter.x : targetX
-    let startY = elementCenter.y < targetY ? elementCenter.y : targetY
 
-    let endX = elementCenter.x >= targetX ? elementCenter.x : targetX
-    let endY = elementCenter.y >= targetY ? elementCenter.y : targetY
+    let startX = originX < targetX ? originX : targetX
+    let startY = originY < targetY ? originY : targetY
 
-    let slope = (endY - startY) / (endX - startX)
-    let x = startX
-    let y = 0
-    for(; x <= endX; x += step){
-        y = - (slope * x)
-        let found = document.elementFromPoint(x, y)
-        if( found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())){
-            return true
+    let endX = originX >= targetX ? originX : targetX
+    let endY = originY >= targetY ? originY : targetY
+
+    if( endX - startX === 0 ){
+        let y = startY
+        for(; y <= endY; y += step){
+            let found = document.elementFromPoint(startX, y)
+            console.log(startX, y)
+            if (found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())) {
+                return true
+            }
+        }
+    } else {
+        let slope = (endY - startY) / (endX - startX)
+        let x = startX
+        let y = 0
+        for (; x <= endX; x += step) {
+            y = (slope * x)
+            let found = document.elementFromPoint(x, y)
+            console.log(x, y)
+            if (found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())) {
+                return true
+            }
         }
     }
 

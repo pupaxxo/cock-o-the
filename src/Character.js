@@ -41,7 +41,8 @@ class Character {
             console.log('ok')
         }
         console.log(isVisible(this.element) ? 'Visible' : 'Not visible')
-        console.log(raycast(this.element, {targetX: 10, targetY: 20}, ['div']) ? 'RC: TRUE' : 'RC: FALSE')
+        console.log(raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
+            {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 100}, ['div', 'p']) ? 'RC: TRUE' : 'RC: FALSE')
     }
 
     stopListener() {
