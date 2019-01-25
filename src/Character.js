@@ -1,6 +1,6 @@
 import './Character.css'
 import Image from './Character.svg'
-import {clamp, isVisible, raycast} from './Utils'
+import {clamp, fixElement, raycast} from './Utils'
 
 class Character {
 
@@ -37,10 +37,8 @@ class Character {
     
     reDraw() {
         this.element.style = `top: ${this.y}px; left: ${this.x}px`
-        if (isVisible(this.element)) {
-            console.log('ok')
-        }
-        console.log(isVisible(this.element) ? 'Visible' : 'Not visible')
+        //console.log(isVisible(this.y, this.element.offsetHeight) ? 'Visible' : 'Not visible')
+        fixElement(this.y, this.element.offsetHeight, window.innerHeight / 2, window.innerHeight / 3)
         console.log(raycast(this.element, {targetX: 10, targetY: 20}, ['div']) ? 'RC: TRUE' : 'RC: FALSE')
     }
 
