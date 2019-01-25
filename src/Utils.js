@@ -16,9 +16,13 @@ const raycast = (element, {targetX, targetY}, elementsToConsider) => {
 
     let endX = elementCenter.x >= targetX ? elementCenter.x : targetX
     let endY = elementCenter.y >= targetY ? elementCenter.y : targetY
-    for(; startX <= endX; startX += step){
-        for(; startY <= endY; startY += step){
-            let found = document.elementFromPoint(startX, startY)
+
+    let slope = (endY - startY) / (endX - startX)
+    let x = startX
+    let y = 0
+    for(; x <= endX; x += step){
+            y = - (slope * x)
+            let found = document.elementFromPoint(x, y)
             if( found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())){
                 return true
             }
