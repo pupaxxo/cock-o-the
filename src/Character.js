@@ -1,6 +1,6 @@
 import './Character.css'
 import Image from './Character.svg'
-import {clamp, isVisible} from './Utils'
+import {clamp, isVisible, raycast} from './Utils'
 
 class Character {
 
@@ -41,6 +41,7 @@ class Character {
             console.log('ok')
         }
         console.log(isVisible(this.element) ? 'Visible' : 'Not visible')
+        console.log(raycast(this.element, {targetX: 10, targetY: 20}, ['div']) ? 'RC: TRUE' : 'RC: FALSE')
     }
 
     stopListener() {

@@ -21,11 +21,10 @@ const raycast = (element, {targetX, targetY}, elementsToConsider) => {
     let x = startX
     let y = 0
     for(; x <= endX; x += step){
-            y = - (slope * x)
-            let found = document.elementFromPoint(x, y)
-            if( found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())){
-                return true
-            }
+        y = - (slope * x)
+        let found = document.elementFromPoint(x, y)
+        if( found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())){
+            return true
         }
     }
 
@@ -49,5 +48,6 @@ const isVisible = (el) => {
 
 export {
     clamp,
-    isVisible
+    isVisible,
+    raycast
 }
