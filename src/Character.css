@@ -1,0 +1,6 @@
+#game-character {
+    width: 20px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+}
