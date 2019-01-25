@@ -15,23 +15,18 @@ const raycast = ({originX, originY}, {targetX, targetY}, elementsToConsider) => 
     let endX = originX >= targetX ? originX : targetX
     let endY = originY >= targetY ? originY : targetY
 
-    if( endX - startX === 0 ){
-        let y = startY
-        for(; y <= endY; y += step){
-            let found = document.elementFromPoint(startX, y)
-            console.log(startX, y)
+    if (endX - startX === 0 ){
+        for(let y = startY; y <= endY; y += step){
+            let found = document.elementFromPoint(startX - window.scrollX, y - window.scrollY)
             if (found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())) {
                 return true
             }
         }
     } else {
         let slope = (endY - startY) / (endX - startX)
-        let x = startX
-        let y = 0
-        for (; x <= endX; x += step) {
-            y = (slope * x)
-            let found = document.elementFromPoint(x, y)
-            console.log(x, y)
+        for (let x = startX; x <= endX; x += step) {
+            let y = (slope * x)
+            let found = document.elementFromPoint(x - window.scrollX, y - window.scrollY)
             if (found !== null && found !== undefined && elementsToConsider.includes(found.tagName.toLowerCase())) {
                 return true
             }

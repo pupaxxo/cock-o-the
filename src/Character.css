@@ -2,6 +2,6 @@
     width: 60px;
     height: 80px;
     position: absolute;
-    transition: all .1s;
+    transition: all .05s;
     z-index: 6000;
 }

@@ -7,7 +7,9 @@ class Character {
     element = null
     x = 0
     y = 0
-    speed = 100
+    lastDrawnX = 0
+    lastDrawnY = 0
+    speed = 50
 
     listener = null
     pressed = null
@@ -19,8 +21,9 @@ class Character {
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
-            if (this.pressed === e.keyCode)
-            this.stopListener()
+            if (this.pressed === e.keyCode) {
+                this.pressed = null
+            }
         }
         window.onresize = () => {
             this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
@@ -33,21 +36,39 @@ class Character {
         this.x = this.maxWidth
         this.y = this.maxHeight
         this.reDraw()
-    }
-    
-    reDraw() {
-        this.element.style = `top: ${this.y}px; left: ${this.x}px`
-        console.log(raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
-            {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 100}, ['div', 'p']) ? 'RC: TRUE' : 'RC: FALSE')
-        fixElement(this.y, this.element.offsetHeight, window.innerHeight / 2, window.innerHeight / 3)
+
+        setInterval(() => this.tick(), 1000/20)
     }
 
-    stopListener() {
-        if (this.listener) {
-            this.pressed = null
-            clearTimeout(this.listener)
-            this.listener = null
+    tick() {
+        if (this.pressed === 38) {
+            this.y -= this.speed
         }
+        else if (this.pressed === 40) {
+            this.y += this.speed
+        }
+        else if (this.pressed === 37) {
+            this.x -= this.speed
+        }
+        else if (this.pressed === 39) {
+            this.x += this.speed
+        }
+
+        if (!raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
+            {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 10 }, ['div', 'p'])) {
+            this.y += this.speed
+        }
+
+        this.fixPg()
+        this.reDraw()
+    }
+
+    reDraw() {
+        if (this.x === this.lastDrawnX && this.y === this.lastDrawnY) return
+        this.lastDrawnX = this.x
+        this.lastDrawnY = this.y
+        this.element.style = `top: ${this.y}px; left: ${this.x}px`
+        fixElement(this.y, this.element.offsetHeight, window.innerHeight / 2, window.innerHeight / 3)
     }
 
     onKeyDown(e) {
@@ -57,30 +78,7 @@ class Character {
         e.preventDefault();
 
         if (this.listener && this.pressed === e.keyCode) return
-        this.stopListener()
-
         this.pressed = e.keyCode
-
-        const func = () => {
-            if (this.pressed === 38) {
-                this.y -= this.speed
-            }
-            else if (this.pressed === 40) {
-                this.y += this.speed
-            }
-            else if (this.pressed === 37) {
-               this.x -= this.speed
-            }
-            else if (this.pressed === 39) {
-               this.x += this.speed
-            }
-
-            this.fixPg()
-            this.reDraw()
-            this.listener = setTimeout(func, 100)
-        }
-
-        this.listener = setTimeout(func)
     }
 
     fixPg() {
