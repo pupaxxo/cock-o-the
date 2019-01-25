@@ -1,6 +1,5 @@
 import './Character.css'
 import { clamp } from './Utils'
-import Image from './Character.svg'
 
 class Character {
 
@@ -13,7 +12,7 @@ class Character {
     pressed = null
 
     constructor() {
-        document.writeln(`<div id="game-character"><img style="width: 100%; height: 100%;" src="${Image}" /></div>`)
+        document.writeln('<div id="game-character"></div>')
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
