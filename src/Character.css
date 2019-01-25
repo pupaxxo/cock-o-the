@@ -5,3 +5,7 @@
     transition: all .05s;
     z-index: 6000;
 }
+
+.bordo {
+    border: 2px solid red !important;
+}

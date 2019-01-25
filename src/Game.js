@@ -8,7 +8,7 @@ class Game {
     character = null
 
     constructor() {
-        document.writeln('<div id="game-container"></div>')
+        document.body.innerHTML += '<div id="game-container"></div>'
         document.onkeydown = (e) => {
             if (this.started) return
             if (e.keyCode === 83) {

@@ -17,7 +17,7 @@ class Character {
     maxWidth = null
 
     constructor() {
-        document.getElementById('game-container').innerHTML = document.getElementById('game-container').innerHTML + `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
+        document.getElementById('game-container').innerHTML += `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
@@ -52,11 +52,38 @@ class Character {
         }
         else if (this.pressed === 39) {
             this.x += this.speed
+        } else if (this.pressed === 32) {
+            this.y -= this.speed * 2
+            this.pressed = false
+            this.fixPg()
+            this.reDraw()
+
+        } else if (this.pressed === 68) {
+            this.y -= this.speed * 10
+            this.pressed = false
+            this.fixPg()
+            this.reDraw()
+
         }
 
-        if (!raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
-            {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 10 }, ['div', 'p'])) {
-            this.y += this.speed
+        if (this.y !== this.maxHeight) {
+            const result = raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
+                {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 10 }, (el) => {
+                    return el !== this.element && ['span', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].includes(el.tagName.toLowerCase())
+                });
+
+            if (result !== false) {
+                if (result.nonFotte) {
+                    clearInterval(result.nonFotte)
+                }
+                result.className += " bordo"
+                result.nonFotte = setTimeout(() => {
+                    result.className = result.className.split(' ').filter(a => a !== 'bordo').join(' ')
+                }, 300)
+                //this.y = result.getBoundingClientRect().top
+            } else {
+                this.y += this.speed
+            }
         }
 
         this.fixPg()
@@ -73,7 +100,10 @@ class Character {
 
     onKeyDown(e) {
 
-        if (![38, 40, 37, 39].includes(e.keyCode)) return
+        if (![38, 40, 37, 39, 32, 68].includes(e.keyCode)) {
+            console.log(e.keyCode + " <= tasto non conosciuto")
+            return
+        }
 
         e.preventDefault();
 

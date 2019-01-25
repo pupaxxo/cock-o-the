@@ -17,19 +17,17 @@ const raycast = ({originX, originY}, {targetX, targetY}, isOk) => {
 
     if (endX - startX === 0 ){
         for(let y = startY; y <= endY; y += step){
-            let found = document.elementFromPoint(startX - window.scrollX, y - window.scrollY)
-            if (found !== null && found !== undefined && isOk(found.tagName.toLowerCase())) {
-                return true
-            }
+            let found = document.elementsFromPoint(startX - window.scrollX, y - window.scrollY)
+            const el = found.find(isOk)
+            if (el !== undefined) return el
         }
     } else {
         let slope = (endY - startY) / (endX - startX)
         for (let x = startX; x <= endX; x += step) {
             let y = (slope * x)
-            let found = document.elementFromPoint(x - window.scrollX, y - window.scrollY)
-            if (found !== null && found !== undefined && isOk(found.tagName.toLowerCase())) {
-                return true
-            }
+            let found = document.elementsFromPoint(x - window.scrollX, y - window.scrollY)
+            const el = found.find(isOk)
+            if (el !== undefined) return el
         }
     }
 
