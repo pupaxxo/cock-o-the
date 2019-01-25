@@ -11,9 +11,11 @@ class Character {
 
     listener = null
     pressed = null
+    maxHeight = null
+    maxWidth = null
 
     constructor() {
-        document.writeln(`<div id="game-character"><img style="width: 100%; height: 100%;" src="${Image}" /></div>`)
+        document.body.innerHTML = document.body.innerHTML + `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
@@ -21,9 +23,15 @@ class Character {
             this.stopListener()
         }
         window.onresize = () => {
+            this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
+            this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight
             this.fixPg()
             this.reDraw()
         }
+        this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
+        this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight
+        this.x = this.maxWidth
+        this.y = this.maxHeight
         this.reDraw()
     }
     
@@ -42,6 +50,8 @@ class Character {
     onKeyDown(e) {
 
         if (![38, 40, 37, 39].includes(e.keyCode)) return
+
+        e.preventDefault();
 
         if (this.listener && this.pressed === e.keyCode) return
         this.stopListener()
@@ -71,8 +81,8 @@ class Character {
     }
 
     fixPg() {
-        this.x = clamp(this.x, 0, window.innerWidth - this.element.offsetWidth)
-        this.y = clamp(this.y, 0, window.innerHeight - this.element.offsetHeight)
+        this.x = clamp(this.x, 0, this.maxWidth)
+        this.y = clamp(this.y, 0, this.maxHeight)
     }
 }
 

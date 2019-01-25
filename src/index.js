@@ -1,3 +1,3 @@
-import Character from './Character'
+import Game from './Game'
 
-let character = new Character();
+let game = new Game()
