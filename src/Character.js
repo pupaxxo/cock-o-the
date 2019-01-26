@@ -1,6 +1,8 @@
 import './Character.css'
 import Image from './assets/SVG/pollo.svg'
 import Image2 from './assets/SVG/pollo_cammina.svg'
+import Image3 from './assets/SVG/pollo_volo.svg'
+import Image4 from './assets/SVG/pollo_bocca_aperta.svg'
 import {clamp, fixElement, raycast} from './Utils'
 import BezierEasing from 'bezier-easing'
 import Projectile from './Projectile'
@@ -57,6 +59,8 @@ class Character {
     currentSpeed = 0
     verticalSpeed = 0
 
+    boccaAperta = 0
+
     isGround() {
 
         let range = Math.abs(this.verticalSpeed)
@@ -104,8 +108,9 @@ class Character {
     }
 
     addProjectile() {
-        const projectile = new Projectile(this.x, this.y, 10, this.direction, this.game)
+        const projectile = new Projectile(this.x + (this.direction === 1 ? this.element.offsetWidth : 0), this.y + 10, 10, this.direction, this.game)
         this.game.ticker.add(projectile)
+        this.boccaAperta = 30
     }
 
     handleJump() {
@@ -144,6 +149,7 @@ class Character {
             this.game.lose()
         }
 
+
         if (this.direction === Directions.Left) {
             this.x -= this.currentSpeed
         } else if (this.direction === Directions.Right) {
@@ -155,16 +161,30 @@ class Character {
             this.spriteChangeTicks--
         }
 
+        const img = this.element.getElementsByTagName('img')[0]
+
         if (this.spriteChangeTicks === 0) {
-            const img = this.element.getElementsByTagName('img')[0]
             img.src = img.src === Image ? Image2 : Image
             this.spriteChangeTicks = 20
+        }
+
+        if (this.jumpingTicks !== 0) {
+            img.src = Image3
+        }
+
+        if (this.boccaAperta !== 0) {
+            img.src = Image4
+            this.boccaAperta --
         }
 
         this.y += this.verticalSpeed
 
         if (this.jumpingTicks !== 0) {
             this.handleJump()
+
+            if (this.jumpingTicks === 0) {
+                img.src = Image
+            }
         }
 
         const ground = this.isGround()
@@ -172,6 +192,9 @@ class Character {
             if (this.jumpingTicks <= this.totalJumpTicks / 2) {
                 this.jumpingTicks = 0;
                 this.verticalSpeed = 0;
+                if (this.boccaAperta === 0) {
+                    img.src = Image
+                }
             }
         }
 

@@ -78,7 +78,7 @@ class PageParser {
             a.classList.add('real-usable')
         })
 
-        const ele2 = ele.filter(a => {
+        /*const ele2 = ele.filter(a => {
             return Math.round(Math.random() * 5) === 0
         })
 
@@ -90,7 +90,7 @@ class PageParser {
             if (rect.left + window.scrollX < 0 || rect.left + window.scrollX > maxWidth || rect.top + window.scrollY > maxHeight || rect.top + window.scrollY < 0) return false
             const enemy = new Enemy(rect.left + window.scrollX, rect.top + window.scrollY, a.offsetWidth, a.offsetHeight, this.game)
             this.game.ticker.add(enemy)
-        })
+        })*/
     }
 }
 
