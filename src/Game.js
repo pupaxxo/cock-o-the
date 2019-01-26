@@ -22,7 +22,7 @@ class Game {
     delayBeforeStart = 1
 
     constructor() {
-        document.body.innerHTML += '<div id="game-container"><audio autoplay><source src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
+        document.body.innerHTML += '<div id="game-container"><audio id="soundtrack-superdubstep"><source src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
         window.onkeydown = (e) => {
             if (this.started) {
                 if (e.keyCode === 82) { // S
