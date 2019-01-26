@@ -5,6 +5,7 @@ import GameFinishChecker from './GameFinishChecker'
 import UIManager from './UIManager.js'
 import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
+import PageParser from './PageParser'
 
 class Game {
 
@@ -15,6 +16,7 @@ class Game {
     character = null
     UIManager = null
     homeFinder = null
+    pageParser = null
 
     //delayBeforeStart = 2500
     delayBeforeStart = 1
@@ -49,6 +51,7 @@ class Game {
             behavior: 'smooth'
         });
         setTimeout(() => {
+            this.pageParser = new PageParser()
             this.character = new Character()
             this.gameFinishChecker = new GameFinishChecker(this)
         }, this.delayBeforeStart)

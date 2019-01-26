@@ -62,7 +62,7 @@ class Character {
             if (debug) {
                 console.log(el)
             }
-                return el !== this.element && ['span', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].includes(el.tagName.toLowerCase())
+                return el !== this.element && el.className.includes('usable')
             })
         if (result !== false) {
             //console.log(Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)))
@@ -121,7 +121,7 @@ class Character {
         this.verticalSpeed = (f(normalizedTick) - 0.5) * this.jumpStrength;
         this.jumpingTicks--
         if (this.jumpingTicks < this.totalJumpTicks/2 - 2) {
-            const ground = this.isGround(true)
+            const ground = this.isGround()
             if (ground !== false) {
                 this.jumpingTicks = 0
                 this.verticalSpeed = 0
