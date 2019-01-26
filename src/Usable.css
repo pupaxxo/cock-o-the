@@ -1,4 +1,7 @@
 .usable {
     border: 2px double #4277f4;
+    z-index: 5000;
+    color: white;
+    border-radius: 2px;
     background-color: #4277f4;
 }

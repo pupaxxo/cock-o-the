@@ -7,6 +7,17 @@ import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
 import PageParser from './PageParser'
 
+const base64ToArrayBuffer = (base64) => {
+    console.log(base64)
+    let binaryString =  window.atob(base64);
+    let len = binaryString.length;
+    let bytes = new Uint8Array( len );
+    for (let i = 0; i < len; i++)        {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
 class Game {
 
     started = false
@@ -18,12 +29,22 @@ class Game {
     homeFinder = null
     pageParser = null
 
+    bgmusic = null
+    audioCtx = null
+    source = null
+
     //delayBeforeStart = 2500
     delayBeforeStart = 1
 
     constructor() {
-        document.body.innerHTML += '<div id="game-container"><audio id="soundtrack-superdubstep"><source src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
+        document.body.innerHTML += '<div id="game-container"><audio><source id="soundtrack-superdubstep" src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
+
+        this.bgmusic = document.getElementById('soundtrack-superdubstep').src.replace('data:audio/mpeg;base64,', '')
+        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)(); // define audio context
+        this.source = this.audioCtx.createBufferSource(); // creates a sound source
+
         window.onkeydown = (e) => {
+            this.audioCtx.resume()
             if (this.started) {
                 if (e.keyCode === 82) { // S
                     this.stop()
@@ -38,7 +59,6 @@ class Game {
 
     start() {
         this.started = true
-        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
         this.UIManager = new UIManager()
         this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal()
@@ -52,9 +72,11 @@ class Game {
         });
         setTimeout(() => {
             this.pageParser = new PageParser()
-            this.character = new Character()
+            this.character = new Character(this)
             this.gameFinishChecker = new GameFinishChecker(this)
         }, this.delayBeforeStart)
+
+        this.playSound(this.bgmusic)
     }
 
     stop() {
@@ -64,13 +86,31 @@ class Game {
     }
 
     win() {
-        document.getElementById('game-container').innerHTML += `<div class="custom-made-modal">
-<h1>HAI VINTO!</h1>
-<button id="game-close">CHIUDI</button>
-</div>`
+        const div = document.createElement('div')
+        div.className = 'win-game-modal-container'
+        div.innerHTML += `<div class="win-game-modal">
+<h1>Wow!</h1><h2>Sei riuscito a raggiungere casa!</h2>
+<button id="game-close">Continua</button></div>
+`
+        document.body.parentNode.style='overflow: hidden'
+        document.getElementById('game-container').appendChild(div)
         document.getElementById('game-close').onclick = () => {
             this.stop()
+            this.goal.click()
         }
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    playSound(base64) {
+        /*this.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
+            this.source.buffer = buffer;
+            this.source.connect(this.audioCtx.destination);
+            this.source.start(0);
+        });*/
     }
 }
 
