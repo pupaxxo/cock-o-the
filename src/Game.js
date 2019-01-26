@@ -34,6 +34,8 @@ class Game {
     audioCtx = null
     source = null
 
+    background = null
+
     //delayBeforeStart = 2500
     delayBeforeStart = 1
 
@@ -42,6 +44,7 @@ class Game {
     constructor() {
         document.body.innerHTML += '<div id="game-container"><audio><source id="soundtrack-superdubstep" src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
 
+        this.background = document.getElementById('super-background')
         this.bgmusic = document.getElementById('soundtrack-superdubstep').src.replace('data:audio/mpeg;base64,', '')
         this.audioCtx = new (window.AudioContext || window.webkitAudioContext)(); // define audio context
         this.source = this.audioCtx.createBufferSource(); // creates a sound source
@@ -75,7 +78,7 @@ class Game {
         this.ticker = new Ticker(this)
         this.started = true
         this.UIManager = new UIManager()
-        this.UIManager.setTimerSeconds(60)
+        this.UIManager.setTimerSeconds(6)
         this.goal = this.homeFinder.selectGoal()
         if (this.goal === false) {
             return
@@ -105,7 +108,6 @@ class Game {
     }
 
     win() {
-        console.log('WINNN')
         const div = document.createElement('div')
         div.className = 'win-game-modal-container'
         div.innerHTML += `<div class="win-game-modal">

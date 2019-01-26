@@ -34,8 +34,10 @@ class UIManager {
     tick(){
         if (this.running) {
             this.timerSeconds -= 1 / TPS
-            if (Math.ceil(this.timerSeconds) === 0)
+            if (Math.ceil(this.timerSeconds) === 0){
                 this.timerExpired = true
+                this.stopTimer()
+            }
             this.reDraw()
         }
     }
