@@ -52,21 +52,31 @@ class Character {
     currentSpeed = 0
     verticalSpeed = 0
 
-    isGround() {
+    isGround(debug = false) {
+        //console.log(this.y + this.element.offsetHeight, this.y + this.element.offsetHeight + 1 - this.verticalSpeed)
         const result = raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
-            {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 1 }, (el) => {
+            {
+                targetX: this.x + (this.element.offsetWidth/2),
+                targetY: this.y + this.element.offsetHeight + 1
+            }, (el) => {
+            if (debug) {
+                console.log(el)
+            }
                 return el !== this.element && ['span', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].includes(el.tagName.toLowerCase())
             })
         if (result !== false) {
             //console.log(Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)))
-            if (Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)) > 20) return false
-            if (result.fottitene) {
+            if (Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)) > 30) {
+                console.log(Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)))
+                return false
+            }
+            /*if (result.fottitene) {
                 clearInterval(result.fottitene)
             }
             result.classList.add('bordo')
             result.fottitene = setInterval(() => {
                 result.classList.remove('bordo')
-            }, 500)
+            }, 500)*/
             return result
         }
         return false
@@ -110,12 +120,14 @@ class Character {
         const f = BezierEasing(0, 0, 1, 0.5)
         this.verticalSpeed = (f(normalizedTick) - 0.5) * this.jumpStrength;
         this.jumpingTicks--
-        const ground = this.isGround()
-        if (this.jumpingTicks < this.totalJumpTicks/2 - 2 && ground !== false) {
-            this.jumpingTicks = 0
-            this.verticalSpeed = 0
-            if (Math.abs(ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight - this.y) < 15)
-                this.y = ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight
+        if (this.jumpingTicks < this.totalJumpTicks/2 - 2) {
+            const ground = this.isGround(true)
+            if (ground !== false) {
+                this.jumpingTicks = 0
+                this.verticalSpeed = 0
+                if (Math.abs(ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight - this.y) < 15)
+                    this.y = ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight
+            }
         }
     }
 
@@ -132,7 +144,7 @@ class Character {
             this.handleJump()
         }
 
-        if (!this.isGround() && this.y !== this.maxHeight && this.jumpingTicks === 0) {
+        if (this.jumpingTicks === 0 && this.y !== this.maxHeight && !this.isGround()) {
             this.y += 7
         }
 
