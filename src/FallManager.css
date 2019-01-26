@@ -1,0 +1,19 @@
+@-webkit-keyframes falling {
+
+    0% {
+        -webkit-transform:
+                translate3d(300,0,0)
+                rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform:
+                translate3d(-350px,700px,0)
+                rotate(90deg);
+        opacity: 0;
+    }
+}
+
+.falling {
+    animation: falling 5s infinite
+}

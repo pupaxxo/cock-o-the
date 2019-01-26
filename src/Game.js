@@ -58,8 +58,7 @@ class Game {
                 }
             }
         }*/
-        
-        //this.fallmanager = new FallManager(document.documentElement.scrollHeight);
+
         this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal(true)
         const oldOnclick = this.goal.onclick
@@ -88,6 +87,7 @@ class Game {
             behavior: 'smooth'
         });
         setTimeout(() => {
+            this.fallmanager = new FallManager();
             this.pageParser = new PageParser(this)
             this.character = new Character(this)
             this.multiplayer = new Multiplayer(this)
@@ -96,7 +96,7 @@ class Game {
             this.ticker.add(this.gameFinishChecker)
             this.ticker.add(this.UIManager)
             this.UIManager.startTimer()
-            //this.ticker.add(this.fallmanager)
+            this.ticker.add(this.fallmanager)
         }, this.delayBeforeStart)
 
         this.playSound(this.bgmusic)
