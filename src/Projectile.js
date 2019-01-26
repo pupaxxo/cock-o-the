@@ -35,7 +35,8 @@ class Projectile {
 
     checkHit() {
         let player = this.game.character
-        if ((this.x + this.element.offsetWidth/2) > player.x && this.y > player.y && (this.y < player.y - player.element.offsetHeight)){
+        if ((this.x + this.element.offsetWidth/2) > player.x && this.x + this.element.offsetWidth/2 < player.x + player.element.offsetWidth
+            && this.y < player.y && (this.y > player.y - player.element.offsetHeight)){
             return player
         }
         return null
@@ -55,7 +56,7 @@ class Projectile {
         } else {
             let other = this.checkHit()
             if (other !== null){
-                other.classList.add('super-game-hit')
+                other.element.classList.add('super-game-hit')
                 this.game.ticker.remove(this)
                 delete this
             }
