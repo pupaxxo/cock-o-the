@@ -1,3 +1,4 @@
+/*
 .real-usable {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     min-width: 40px;
@@ -9,4 +10,16 @@
     text-align: center;
     color: white;
     border-radius: 2px;
+}
+*/
+
+.real-usable{
+    animation-name: sfondoFigo;
+    animation: sfondoFigo 0.2s linear 15;
+}
+
+@keyframes sfondoFigo {
+    50% {
+        opacity: 0;
+    }
 }
