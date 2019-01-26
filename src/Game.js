@@ -9,7 +9,6 @@ import PageParser from './PageParser'
 import Ticker from './Ticker'
 
 const base64ToArrayBuffer = (base64) => {
-    console.log(base64)
     let binaryString =  window.atob(base64);
     let len = binaryString.length;
     let bytes = new Uint8Array( len );
@@ -37,6 +36,8 @@ class Game {
 
     //delayBeforeStart = 2500
     delayBeforeStart = 1
+
+    audioEnabled = true
 
     constructor() {
         document.body.innerHTML += '<div id="game-container"><audio><source id="soundtrack-superdubstep" src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
@@ -104,6 +105,7 @@ class Game {
     }
 
     win() {
+        console.log('WINNN')
         const div = document.createElement('div')
         div.className = 'win-game-modal-container'
         div.innerHTML += `<div class="win-game-modal">
@@ -124,11 +126,12 @@ class Game {
     }
 
     playSound(base64) {
-        /*this.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
-            this.source.buffer = buffer;
-            this.source.connect(this.audioCtx.destination);
-            this.source.start(0);
-        });*/
+        if (this.audioEnabled)
+            this.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
+                this.source.buffer = buffer;
+                this.source.connect(this.audioCtx.destination);
+                this.source.start(0);
+            });
     }
 }
 
