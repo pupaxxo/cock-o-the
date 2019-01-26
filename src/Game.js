@@ -8,6 +8,7 @@ class Game {
 
     started = false
 
+    goal = null
     character = null
     UIManager = null
     homeFinder = null
@@ -34,7 +35,16 @@ class Game {
         setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
         this.UIManager = new UIManager()
         this.homeFinder = new HomeFinder()
-        this.UIManager.startTimer(10)
+        this.goal = this.homeFinder.selectGoal()
+        if (this.goal === false) {
+            return
+        }
+        window.scroll({
+            top: this.goal.getBoundingClientRect().top,
+            left: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
     }
 
     stop() {

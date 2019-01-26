@@ -10,6 +10,8 @@ const JUMP_TICKS = 20
 const Keys = {
     ArrowLeft: 37,
     ArrowRight: 39,
+    ArrowDown: 40,
+    ArrowUp: 38,
     SpaceBar: 32,
     D: 68
 }
@@ -38,7 +40,7 @@ class Character {
     lastDrawnX = 0
     lastDrawnY = 0
 
-    movementSpeed = 50
+    movementSpeed = 40
     jumpStrength = 80
 
     direction = Directions.Left
@@ -46,6 +48,7 @@ class Character {
     maxWidth = null
 
     jumpingTicks = 0
+    totalJumpTicks = 0
     currentSpeed = 0
     verticalSpeed = 0
 
@@ -55,6 +58,8 @@ class Character {
                 return el !== this.element && ['span', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].includes(el.tagName.toLowerCase())
             })
         if (result !== false) {
+            //console.log(Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)))
+            if (Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)) > 20) return false
             if (result.fottitene) {
                 clearInterval(result.fottitene)
             }
@@ -62,7 +67,7 @@ class Character {
             result.fottitene = setInterval(() => {
                 result.classList.remove('bordo')
             }, 500)
-            return true
+            return result
         }
         return false
     }
@@ -78,12 +83,12 @@ class Character {
         }
         window.onresize = () => {
             this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
-            this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight
+            this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
             this.fixPg()
             this.reDraw()
         }
         this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
-        this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight
+        this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
         this.x = this.maxWidth
         this.y = this.maxHeight
         this.reDraw()
@@ -92,7 +97,8 @@ class Character {
     }
 
     startJump() {
-        this.jumpingTicks = JUMP_TICKS
+        this.totalJumpTicks = JUMP_TICKS + 2 * Math.round((Math.random() * 15))
+        this.jumpingTicks = this.totalJumpTicks
     }
 
     handleJump() {
@@ -100,13 +106,16 @@ class Character {
             this.verticalSpeed = 0
             return
         }
-        const normalizedTick = this.jumpingTicks / JUMP_TICKS
+        const normalizedTick = this.jumpingTicks / this.totalJumpTicks
         const f = BezierEasing(0, 0, 1, 0.5)
         this.verticalSpeed = (f(normalizedTick) - 0.5) * this.jumpStrength;
         this.jumpingTicks--
-        if (this.jumpingTicks < JUMP_TICKS - 3 && this.isGround()) {
+        const ground = this.isGround()
+        if (this.jumpingTicks < this.totalJumpTicks/2 - 2 && ground !== false) {
             this.jumpingTicks = 0
             this.verticalSpeed = 0
+            if (Math.abs(ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight - this.y) < 15)
+                this.y = ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight
         }
     }
 
@@ -121,6 +130,10 @@ class Character {
 
         if (this.jumpingTicks !== 0) {
             this.handleJump()
+        }
+
+        if (!this.isGround() && this.y !== this.maxHeight && this.jumpingTicks === 0) {
+            this.y += 7
         }
 
         /*if (this.y !== this.maxHeight) {
@@ -169,6 +182,10 @@ class Character {
 
         e.preventDefault();
 
+        if ([Keys.ArrowUp, Keys.ArrowDown].includes(e.keyCode)) {
+            return
+        }
+
         // Stiamo andando già in questa direzione
         if (this.direction === keysToDirection(e.keyCode) && this.currentSpeed === this.movementSpeed) return
 
@@ -177,7 +194,7 @@ class Character {
             this.currentSpeed = this.movementSpeed
         }
 
-        if (e.keyCode === Keys.SpaceBar) {
+        if (e.keyCode === Keys.SpaceBar && this.jumpingTicks === 0) {
             this.startJump()
         }
     }
