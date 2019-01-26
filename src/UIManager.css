@@ -1,0 +1,7 @@
+.game-time-container {
+    display: block;
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    font-size: 10vmin;
+}
