@@ -25,13 +25,20 @@ class Projectile {
         this.element.className = 'game-projectile'
         document.getElementById('game-container').appendChild(this.element)
         this.draw()
-
         window.onresize = () => {
             this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
             this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
         }
         this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
         this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
+    }
+
+    checkHit() {
+        let player = this.game.character
+        if ((this.x + this.element.offsetWidth/2) > player.x && this.y > player.y && (this.y < player.y - player.element.offsetHeight)){
+            return player
+        }
+        return null
     }
 
     tick() {
@@ -45,6 +52,13 @@ class Projectile {
             this.element.remove()
             this.game.ticker.remove(this)
             delete this
+        } else {
+            let other = this.checkHit()
+            if (other !== null){
+                other.classList.add('super-game-hit')
+                this.game.ticker.remove(this)
+                delete this
+            }
         }
     }
 
