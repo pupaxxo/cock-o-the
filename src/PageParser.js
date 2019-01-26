@@ -6,7 +6,41 @@ class PageParser {
     }
 
 
-    getAllTextNodes() {
+    //LA PRIMA VOLTA DEVE ESSERE CHIAMATA CON QUESTI ELEMENTI
+//let elements = document.querySelectorAll("*");
+
+ setUsables(elements){
+for (let i =0; i<elements.length; i++) 
+{
+    if (elements[i]['nodeName'] == 'BUTTON' || (elements[i]['nodeName'] == 'SPAN'&& elements[i].childNodes.length==0 ) ) { 
+        elements[i].classList = ['usable']  || elements[i].classList.add('usable');
+         
+          continue;
+    } else  
+    if ((elements[i]['nodeName'] != 'SCRIPT' && elements[i]['nodeName'] != 'STYLE'  && elements[i]['nodeName'] != 'TITLE'))
+    {
+        if (elements[i]['nodeName'] == '#text')
+        {
+            console.log("k");
+            let textthathastobeputintospans = elements[i]['textContent'];
+            elements[i]['parentElement'].innerHTML =   elements[i]['parentElement'].innerHTML.replace(textthathastobeputintospans, '<span class="usable" >' + textthathastobeputintospans + '</span>');  
+        
+        } else {
+        setUsables(elements[i]['childNodes']);
+        }
+    }
+}
+}  
+    
+
+
+
+
+
+
+
+    getAllTextNodes()
+     {
         let nodes = []
         let elements = document.querySelectorAll('*')
         for (let i = 0; i < elements.length; i++) {
@@ -14,9 +48,7 @@ class PageParser {
                 elements[i].classList.add('usable')
             }
             if (elements[i]['nodeName'] != 'SCRIPT' && elements[i]['nodeName'] != 'STYLE') {
-
                 nodes.push(((elements[i]['childNodes'])))
-
                 for (let j = 0; j < elements[i]["childNodes"].length; j++) {
                     if (typeof elements[i]['childNodes'][j]['nodeName'] != 'undefined') {
                         if (elements[i]['childNodes'][j]['nodeName'] == '#text') {
@@ -28,9 +60,7 @@ class PageParser {
                                 } else {
                                     elements[i]['childNodes'][j].classList = ['usable']
                                 }
-
                             }
-
                         }
                     }
                 }
