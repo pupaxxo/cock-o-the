@@ -1,6 +1,6 @@
 import './Character.css'
-import Image from './Character.svg'
-import Image2 from './Character2.svg'
+import Image from './assets/SVG/pollo.svg'
+import Image2 from './assets/SVG/pollo_cammina.svg'
 import {clamp, fixElement, raycast} from './Utils'
 import BezierEasing from 'bezier-easing'
 import Projectile from './Projectile'
@@ -70,12 +70,13 @@ class Character {
             return false
         }
 
-        return result[0]
+        const real = result[0]
+        return real
     }
 
     constructor(game) {
         this.game = game
-        this.spriteChangeTicks = 30
+        this.spriteChangeTicks = 20
         document.getElementById('game-container').innerHTML += `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
@@ -157,7 +158,7 @@ class Character {
         if (this.spriteChangeTicks === 0) {
             const img = this.element.getElementsByTagName('img')[0]
             img.src = img.src === Image ? Image2 : Image
-            this.spriteChangeTicks = 30
+            this.spriteChangeTicks = 20
         }
 
         this.y += this.verticalSpeed
