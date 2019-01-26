@@ -12,6 +12,6 @@ deployExtension:
   only:
     - master #to be invoked only on master merge
   script:
-    - sed -i 's/%version%/$CI_PIPELINE_IID' public/manifest.json
+    - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
     - yarn build
     - yarn deploy
