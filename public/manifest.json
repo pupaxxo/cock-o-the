@@ -1,6 +1,6 @@
 {
   "name": "Inject Project10 in every page",
-  "version": "%version%",
+  "version": "1.0",
   "manifest_version": 2,
   "icons": {
     "16": "icon16.png",

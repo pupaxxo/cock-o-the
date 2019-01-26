@@ -9,6 +9,8 @@ class Game {
     character = null
     homeFinder = null
 
+    delayBeforeStart = 2500
+
     constructor() {
         document.body.innerHTML += '<div id="game-container"></div>'
         window.onkeydown = (e) => {
@@ -26,7 +28,8 @@ class Game {
 
     start() {
         this.started = true
-        this.character = new Character()
+        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
+
         this.homeFinder = new HomeFinder()
     }
 

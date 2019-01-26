@@ -3,5 +3,6 @@
 }
 
 .goal {
-    background-color:lime !important;
+    transform: scale(2);
+    display: block;
 }

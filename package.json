@@ -22,5 +22,8 @@
     "build": "NODE_ENV=production webpack --mode production",
     "watch": "NODE_ENV=development webpack --mode development --watch",
     "deploy": "node deploy.js"
+  },
+  "dependencies": {
+    "animate.css": "^3.7.0"
   }
 }
