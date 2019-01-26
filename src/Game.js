@@ -38,7 +38,6 @@ class Game {
 
     start() {
         this.started = true
-        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
         this.UIManager = new UIManager()
         this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal()

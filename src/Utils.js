@@ -5,41 +5,18 @@ const clamp = (v, min, max) => {
     return v;
 }
 
-const raycast = ({originX, originY}, {targetX, targetY}, isOk) => {
+const raycast = (x, startY, endY) => {
 
-    let step = 1
+    return Array.from(document.querySelectorAll('.usable')).filter(a => {
+        const rect = a.getBoundingClientRect()
 
-    let startX = originX < targetX ? originX : targetX
-    let startY = originY < targetY ? originY : targetY
-
-    let endX = originX >= targetX ? originX : targetX
-    let endY = originY >= targetY ? originY : targetY
-
-    if (endX - startX === 0 ){
-        for(let y = startY; y <= endY; y += step){
-            let found = document.elementsFromPoint(startX - window.scrollX, y - window.scrollY)
-            const el = found.find(isOk)
-            if (el !== undefined) return el
+        if (a.className.includes('dio')) {
+            console.log(startY <= rect.top + window.scrollY && endY >= rect.top + window.scrollY, startY, endY, rect.top + window.scrollY)
         }
-    } else {
-        let slope = (endY - startY) / (endX - startX)
-        for (let x = startX; x <= endX; x += step) {
-            let y = (slope * x)
-            let found = document.elementsFromPoint(x - window.scrollX, y - window.scrollY)
-            const el = found.find(isOk)
-            if (el !== undefined) return el
-        }
-    }
 
-    return false
-
-}
-
-const isVisible = (y, height = 0) => {
-    const scrollEnd = window.scrollY + window.innerHeight - height
-    const scrollTop = window.scrollY
-    console.log(scrollTop, scrollEnd, y)
-    return y >= scrollTop && y <= scrollEnd
+        return startY <= rect.top + window.scrollY && endY >= rect.top + window.scrollY &&
+            x >= rect.left + window.scrollX - 10  && x <= rect.right + window.scrollX + 10
+    })
 }
 
 const fixElement = (y, height, maxBottom, idealBottom) => {
@@ -65,7 +42,6 @@ const fixElement = (y, height, maxBottom, idealBottom) => {
 
 export {
     clamp,
-    isVisible,
     raycast,
     fixElement
 }

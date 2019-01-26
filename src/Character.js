@@ -3,9 +3,9 @@ import Image from './Character.svg'
 import {clamp, fixElement, raycast} from './Utils'
 import BezierEasing from 'bezier-easing'
 
-const TPS = 1000/20
+const TPS = 1000/60
 
-const JUMP_TICKS = 20
+const JUMP_TICKS = 60
 
 const Keys = {
     ArrowLeft: 37,
@@ -40,8 +40,8 @@ class Character {
     lastDrawnX = 0
     lastDrawnY = 0
 
-    movementSpeed = 40
-    jumpStrength = 80
+    movementSpeed = 13
+    jumpStrength = 30
 
     direction = Directions.Left
     maxHeight = null
@@ -53,33 +53,19 @@ class Character {
     verticalSpeed = 0
 
     isGround(debug = false) {
-        //console.log(this.y + this.element.offsetHeight, this.y + this.element.offsetHeight + 1 - this.verticalSpeed)
-        const result = raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
-            {
-                targetX: this.x + (this.element.offsetWidth/2),
-                targetY: this.y + this.element.offsetHeight + 1
-            }, (el) => {
-            if (debug) {
-                console.log(el)
-            }
-                return el !== this.element && el.className.includes('usable')
-            })
-        if (result !== false) {
-            //console.log(Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)))
-            if (Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)) > 30) {
-                console.log(Math.abs((this.y + this.element.offsetHeight) - (result.getBoundingClientRect().top + window.scrollY)))
-                return false
-            }
-            /*if (result.fottitene) {
-                clearInterval(result.fottitene)
-            }
-            result.classList.add('bordo')
-            result.fottitene = setInterval(() => {
-                result.classList.remove('bordo')
-            }, 500)*/
-            return result
+
+        let range = Math.abs(this.verticalSpeed)
+        if (range === 0) range = 5
+
+        const result = raycast(this.x + (this.element.offsetWidth/2),
+            this.y + this.element.offsetHeight - range,
+            this.y + this.element.offsetHeight + 1 + range)
+
+        if (result.length === 0) {
+            return false
         }
-        return false
+
+        return result[0]
     }
 
     constructor() {
@@ -112,22 +98,37 @@ class Character {
     }
 
     handleJump() {
+
+        const speed = 20
+
+        if (this.jumpingTicks === this.totalJumpTicks) {
+            this.verticalSpeed = -speed
+        }
+
+        if (this.jumpingTicks === this.totalJumpTicks/2) {
+            this.verticalSpeed = 0
+        }
+
+        const acceleration = speed/(this.totalJumpTicks/2)
+
+        /*const normalizedTick = this.jumpingTicks / this.totalJumpTicks
+        const f = BezierEasing(0.5, 1, 1, 0.5)
+        this.verticalSpeed = Math.round((f(normalizedTick) - 0.5) * this.jumpStrength);
+        this.jumpingTicks--
+        console.log(this.jumpingTicks <= this.totalJumpTicks/2, this.verticalSpeed)*/
+
+        if (this.jumpingTicks <= this.totalJumpTicks/2) { // GIU
+            this.verticalSpeed += acceleration
+        } else { // SU
+            this.verticalSpeed += acceleration
+        }
+
+        console.log(this.verticalSpeed, acceleration, this.totalJumpTicks)
+
+        this.jumpingTicks--
+
         if (this.jumpingTicks === 0) {
             this.verticalSpeed = 0
-            return
-        }
-        const normalizedTick = this.jumpingTicks / this.totalJumpTicks
-        const f = BezierEasing(0, 0, 1, 0.5)
-        this.verticalSpeed = (f(normalizedTick) - 0.5) * this.jumpStrength;
-        this.jumpingTicks--
-        if (this.jumpingTicks < this.totalJumpTicks/2 - 2) {
-            const ground = this.isGround()
-            if (ground !== false) {
-                this.jumpingTicks = 0
-                this.verticalSpeed = 0
-                if (Math.abs(ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight - this.y) < 15)
-                    this.y = ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight
-            }
         }
     }
 
@@ -138,35 +139,24 @@ class Character {
             this.x += this.currentSpeed
         }
 
-        this.y -= this.verticalSpeed
+        this.y += this.verticalSpeed
 
         if (this.jumpingTicks !== 0) {
             this.handleJump()
         }
 
-        if (this.jumpingTicks === 0 && this.y !== this.maxHeight && !this.isGround()) {
-            this.y += 7
+        const ground = this.isGround()
+        if (ground !== false) {
+            console.log(this.jumpingTicks, this.totalJumpTicks/2)
+            if (this.jumpingTicks <= this.totalJumpTicks / 2) {
+                this.jumpingTicks = 0;
+                this.verticalSpeed = 0;
+            }
         }
 
-        /*if (this.y !== this.maxHeight) {
-            const result = raycast({originX: this.x + (this.element.offsetWidth/2), originY: this.y + this.element.offsetHeight},
-                {targetX: this.x + (this.element.offsetWidth/2), targetY: this.y + this.element.offsetHeight + 10 }, (el) => {
-                    return el !== this.element && ['span', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'].includes(el.tagName.toLowerCase())
-                });
-
-            if (result !== false) {
-                if (result.nonFotte) {
-                    clearInterval(result.nonFotte)
-                }
-                result.className += " bordo"
-                result.nonFotte = setTimeout(() => {
-                    result.className = result.className.split(' ').filter(a => a !== 'bordo').join(' ')
-                }, 300)
-                //this.y = result.getBoundingClientRect().top
-            } else {
-                this.y += this.movementSpeed
-            }
-        }*/
+        if (this.y !== this.maxHeight && this.jumpingTicks === 0 && ground === false) {
+            this.y += 5
+        }
 
         this.fixPg()
         this.reDraw()
@@ -181,7 +171,7 @@ class Character {
         }
         this.lastDrawnX = this.x
         this.lastDrawnY = this.y
-        this.element.style = `top: ${this.y}px; left: ${this.x}px`
+        this.element.style = `top: ${Math.round(this.y)}px; left: ${Math.round(this.x)}px`
         fixElement(this.y, this.element.offsetHeight, window.innerHeight / 2, window.innerHeight / 3)
     }
 
