@@ -1,4 +1,5 @@
 import './HomeFinder.css'
+import 'animate.css'
 
 class HomeFinder {
 
@@ -70,8 +71,10 @@ class HomeFinder {
 
         if (papabili.length === 0)
             alert('Questo sito non ha una casa :c')
-        else
-            papabili[HomeFinder.bestOfArray(papabili)].classList.add('goal')
+        else {
+            papabili[HomeFinder.bestOfArray(papabili)].classList.add('goal', 'animated', 'wobble', 'infinite')
+
+        }
     }
 }
 
