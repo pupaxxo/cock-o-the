@@ -84,8 +84,7 @@ class Character {
         this.game = game
         this.spriteChangeTicks = 20
         document.getElementById('game-container').innerHTML += `<div class="game-character" id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
-        this.source = this.game.audioCtx.createBufferSource()
-        this.shootSFX = document.getElementById('super-sfx-shoot').src.replace('data:audio/mpeg;base64,', '')
+        this.shootSFX = document.getElementById('super-sfx-shoot')
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
@@ -280,13 +279,16 @@ class Character {
         this.y = clamp(this.y, 0, this.maxHeight)
     }
 
-    playSound(base64) {
-        if (this.game.audioEnabled)
-            this.game.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
-                this.source.buffer = buffer;
-                this.source.connect(this.game.audioCtx.destination);
-                this.source.start(0);
-            });
+    playSound(sound) {
+
+        this.game.audioCtx.suspend()
+        let audioElement = document.createElement('audio')
+        audioElement.appendChild(sound)
+        document.getElementById('game-container').appendChild(audioElement)
+        audioElement.play()
+        this.game.audioCtx.resume()
+
+
     }
 }
 

@@ -38,7 +38,7 @@ class Game {
 
     constructor() {
         document.body.innerHTML +=`<div id="game-container"><audio><source id="soundtrack-superdubstep" src="`
-            + bgmusic + `" type="audio/mpeg"><source id="super-sfx-shoot" src="` + bgmusic + `" type='audio/mpeg'></audio></div>`
+            + bgmusic + `" type="audio/mpeg"><source id="super-sfx-shoot" src="` + shootSFX + `" type='audio/mpeg'></audio></div>`
 
         this.background = document.getElementById('super-background')
         this.bgmusic = document.getElementById('soundtrack-superdubstep').src.replace('data:audio/mpeg;base64,', '')
