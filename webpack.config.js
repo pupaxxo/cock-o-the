@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require("copy-webpack-plugin")
+const CleanWebpackPlugin = require("clean-webpack-plugin")
 
 module.exports = {
   entry: './src/index.js',
@@ -46,6 +48,7 @@ module.exports = {
     port: 9000
   },
   plugins: [
+    new CleanWebpackPlugin(["dist"]),
     new HtmlWebPackPlugin({
         template: './public/index.html',
         filename: './index.html',
@@ -61,6 +64,15 @@ module.exports = {
           minifyCSS: true,
           minifyURLs: true
         }
-      }),  
+      }),
+    new CopyWebpackPlugin([{
+      from: "public/manifest.json"
+    }, {
+      from: "public/icon16.png"
+    }, {
+      from: "public/icon48.png"
+    }, {
+      from: "public/icon128.png"
+    }])
   ]
 };
