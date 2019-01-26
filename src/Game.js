@@ -5,6 +5,7 @@ import GameFinishChecker from './GameFinishChecker'
 import UIManager from './UIManager.js'
 import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
+import PageParser from './PageParser'
 
 const base64ToArrayBuffer = (base64) => {
     console.log(base64)
@@ -26,6 +27,7 @@ class Game {
     character = null
     UIManager = null
     homeFinder = null
+    pageParser = null
 
     bgmusic = null
     audioCtx = null
@@ -70,6 +72,7 @@ class Game {
             behavior: 'smooth'
         });
         setTimeout(() => {
+            this.pageParser = new PageParser()
             this.character = new Character()
             this.gameFinishChecker = new GameFinishChecker(this)
         }, this.delayBeforeStart)
