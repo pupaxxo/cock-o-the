@@ -47,14 +47,17 @@ class PageParser {
         let nodes = []
         let elements = document.querySelectorAll('*')
         for (let i = 0; i < elements.length; i++) {
-            if (elements[i]['nodeName'] == 'BUTTON') {
+            if (elements[i]['nodeName'] === 'BUTTON') {
                 elements[i].classList.add('usable')
             }
-            if (elements[i]['nodeName'] != 'SCRIPT' && elements[i]['nodeName'] != 'STYLE') {
+            if (elements[i]['nodeName'] === 'IMG') {
+                elements[i].classList.add('usable')
+            }
+            if (elements[i]['nodeName'] !== 'SCRIPT' && elements[i]['nodeName'] !== 'STYLE') {
                 nodes.push(((elements[i]['childNodes'])))
                 for (let j = 0; j < elements[i]["childNodes"].length; j++) {
                     if (typeof elements[i]['childNodes'][j]['nodeName'] != 'undefined') {
-                        if (elements[i]['childNodes'][j]['nodeName'] == '#text') {
+                        if (elements[i]['childNodes'][j]['nodeName'] === '#text') {
                             if (elements[i]['childNodes'][j]['textContent'].trim().length !== 0) {
                                 let textthathastobeputintospans = elements[i]['childNodes'][j]['textContent']
                                 if (skipFunction !== null && !skipFunction(elements[i])) continue

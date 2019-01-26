@@ -74,7 +74,9 @@ class HomeFinder {
         papabili = this.pushToArray(papabili, GGJ_homepage4)
 
         if (papabili.length === 0) {
-            alert('Questo sito non ha una casa :c')
+            if (!noClass) {
+                alert('Questo sito non ha una casa :c')
+            }
             return false
         } else {
             const goal = papabili[HomeFinder.bestOfArray(papabili)]
