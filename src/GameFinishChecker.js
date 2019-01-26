@@ -3,7 +3,6 @@ class GameFinishChecker {
     rip = false
     constructor(game) {
         this.game = game
-        setInterval(() => this.tick(), 1000/20)
     }
 
     tick() {

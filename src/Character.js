@@ -4,8 +4,6 @@ import Image2 from './Character2.svg'
 import {clamp, fixElement, raycast} from './Utils'
 import BezierEasing from 'bezier-easing'
 
-const TPS = 1000/60
-
 const JUMP_TICKS = 60
 
 const Keys = {
@@ -95,8 +93,6 @@ class Character {
         this.x = this.maxWidth
         this.y = this.maxHeight
         this.reDraw()
-
-        setInterval(() => this.tick(), TPS)
     }
 
     startJump() {

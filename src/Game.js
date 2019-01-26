@@ -6,6 +6,7 @@ import UIManager from './UIManager.js'
 import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
 import PageParser from './PageParser'
+import Ticker from './Ticker'
 
 const base64ToArrayBuffer = (base64) => {
     console.log(base64)
@@ -28,6 +29,7 @@ class Game {
     UIManager = null
     homeFinder = null
     pageParser = null
+    ticker = null
 
     bgmusic = null
     audioCtx = null
@@ -69,6 +71,7 @@ class Game {
     }
 
     start() {
+        this.ticker = new Ticker(this)
         this.started = true
         this.UIManager = new UIManager()
         this.goal = this.homeFinder.selectGoal()
@@ -83,7 +86,9 @@ class Game {
         setTimeout(() => {
             this.pageParser = new PageParser(this)
             this.character = new Character(this)
+            this.ticker.add(this.character)
             this.gameFinishChecker = new GameFinishChecker(this)
+            this.ticker.add(this.gameFinishChecker)
         }, this.delayBeforeStart)
 
         this.playSound(this.bgmusic)
