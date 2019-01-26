@@ -113,9 +113,9 @@ class Game {
 <button id="game-close">Continua</button></div>
 `
         document.body.parentNode.style='overflow: hidden'
+        this.stop()
         document.getElementById('game-container').appendChild(div)
         document.getElementById('game-close').onclick = () => {
-            this.stop()
             this.goal.click()
         }
         window.scroll({
