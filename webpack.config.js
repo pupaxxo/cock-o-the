@@ -30,13 +30,10 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpg|gif|svg)$/i,
+        test: /\.(png|jpg|gif|svg|mp3)$/i,
         use: [
           {
-            loader: 'url-loader',
-            options: {
-              limit: 8192
-            }
+            loader: 'url-loader'
           }
         ]
       }

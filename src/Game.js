@@ -3,6 +3,7 @@ import './Game.css'
 import HomeFinder from './HomeFinder'
 import UIManager from './UIManager.js'
 import Usable from './Usable.js'
+import bgmusic from './assets/bgmusic.mp3'
 
 class Game {
 
@@ -16,7 +17,7 @@ class Game {
     delayBeforeStart = 2500
 
     constructor() {
-        document.body.innerHTML += '<div id="game-container"></div>'
+        document.body.innerHTML += '<div id="game-container"><audio autoplay><source src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
         window.onkeydown = (e) => {
             if (this.started) {
                 if (e.keyCode === 82) { // S
@@ -44,7 +45,6 @@ class Game {
             left: 0,
             behavior: 'smooth'
         });
-        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
     }
 
     stop() {
