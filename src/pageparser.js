@@ -54,6 +54,7 @@ var texts;
 var nodes = new Array;
 
 
+
 function isVisible(elem) {
 
     if (!(elem instanceof Element)) throw Error('DomUtil:  elem is not an element.');
@@ -112,9 +113,9 @@ function isVisible(elem) {
     var elements = document.querySelectorAll("*");
     for (var i = 0; i<elements.length; i++)  
     {
-       
+        if ( elements[i]["nodeName"] == "BUTTON") {elements[i].classList.add("usable");}
         if ( elements[i]["nodeName"] != "SCRIPT" && elements[i]["nodeName"] != "STYLE" ) {
-          
+        
             nodes.push(((elements[i]["childNodes"])));
     
             for (var j=0; j<elements[i]["childNodes"].length; j++ ) 
@@ -134,7 +135,7 @@ function isVisible(elem) {
                     }
                     
                     }
-              
+               
             }
         }
         }
@@ -142,3 +143,7 @@ function isVisible(elem) {
 
 } 
 }
+loadStyle();
+
+getAllTextNodes();
+getAllTextNodes();
