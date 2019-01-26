@@ -6,6 +6,7 @@ class Game {
 
     started = false
 
+    goal = null
     character = null
     homeFinder = null
 
@@ -28,9 +29,17 @@ class Game {
 
     start() {
         this.started = true
-        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
-
         this.homeFinder = new HomeFinder()
+        this.goal = this.homeFinder.selectGoal()
+        if (this.goal === false) {
+            return
+        }
+        window.scroll({
+            top: this.goal.getBoundingClientRect().top,
+            left: 0,
+            behavior: 'smooth'
+        });
+        setTimeout(() => {this.character = new Character()}, this.delayBeforeStart)
     }
 
     stop() {

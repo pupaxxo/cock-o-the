@@ -4,7 +4,7 @@ import 'animate.css'
 class HomeFinder {
 
     constructor() {
-        this.selectGoal()
+
     }
 
 
@@ -69,11 +69,13 @@ class HomeFinder {
         let GGJ_homepage3 = document.querySelectorAll('[href=\'' + document.location.origin + '\']')
         papabili = this.pushToArray(papabili, GGJ_homepage3)
 
-        if (papabili.length === 0)
+        if (papabili.length === 0) {
             alert('Questo sito non ha una casa :c')
-        else {
-            papabili[HomeFinder.bestOfArray(papabili)].classList.add('goal', 'animated', 'wobble', 'infinite')
-
+            return false
+        } else {
+            const goal = papabili[HomeFinder.bestOfArray(papabili)]
+            goal.classList.add('goal', 'animated', 'wobble', 'infinite')
+            return goal
         }
     }
 }

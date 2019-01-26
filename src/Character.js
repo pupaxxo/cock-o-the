@@ -48,6 +48,7 @@ class Character {
     maxWidth = null
 
     jumpingTicks = 0
+    totalJumpTicks = 0
     currentSpeed = 0
     verticalSpeed = 0
 
@@ -82,11 +83,11 @@ class Character {
         }
         window.onresize = () => {
             this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
-            this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight
+            this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
             this.fixPg()
             this.reDraw()
         }
-        this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth - this.element.offsetWidth - 10
+        this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
         this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
         this.x = this.maxWidth
         this.y = this.maxHeight
@@ -96,7 +97,8 @@ class Character {
     }
 
     startJump() {
-        this.jumpingTicks = JUMP_TICKS
+        this.totalJumpTicks = JUMP_TICKS + 2 * Math.round((Math.random() * 15))
+        this.jumpingTicks = this.totalJumpTicks
     }
 
     handleJump() {
@@ -104,12 +106,12 @@ class Character {
             this.verticalSpeed = 0
             return
         }
-        const normalizedTick = this.jumpingTicks / JUMP_TICKS
+        const normalizedTick = this.jumpingTicks / this.totalJumpTicks
         const f = BezierEasing(0, 0, 1, 0.5)
         this.verticalSpeed = (f(normalizedTick) - 0.5) * this.jumpStrength;
         this.jumpingTicks--
         const ground = this.isGround()
-        if (this.jumpingTicks < JUMP_TICKS - 2 && ground !== false) {
+        if (this.jumpingTicks < this.totalJumpTicks/2 - 2 && ground !== false) {
             this.jumpingTicks = 0
             this.verticalSpeed = 0
             if (Math.abs(ground.getBoundingClientRect().top + window.scrollY - this.element.offsetHeight - this.y) < 15)
