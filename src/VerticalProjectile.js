@@ -1,6 +1,8 @@
 import './Projectile.css'
+import {raycast} from './Utils'
+import Image from './assets/SVG/bomba.svg'
 
-class Projectile {
+class VerticalProjectile {
 
     id = null
     x = null
@@ -33,20 +35,28 @@ class Projectile {
         this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
     }
 
-    checkHit() {
-        let player = this.game.character
-        if ((this.x + this.element.offsetWidth/2) > player.x && this.x + this.element.offsetWidth/2 < player.x + player.element.offsetWidth
-            && this.y < player.y && (this.y > player.y - player.element.offsetHeight)){
-            return player
+    isGround() {
+
+        let range = Math.abs(this.speed)
+        if (range === 0) range = 5
+
+        const result = raycast(this.x + (this.element.offsetWidth/2),
+            this.y + this.element.offsetHeight - range,
+            this.y + this.element.offsetHeight + 1 + range)
+
+        if (result.length === 0) {
+            return false
         }
-        return null
+
+        const real = result[0]
+        return real
     }
 
     tick() {
         if (this.direction === 1) {
-            this.x += this.speed
+            this.y += this.speed
         } else if (this.direction === -1) {
-            this.x -= this.speed
+            this.y -= this.speed
         }
         this.draw()
         if (this.x < 0 || this.x > this.maxWidth || this.y > this.maxHeight || this.y < 0) {
@@ -54,11 +64,11 @@ class Projectile {
             this.game.ticker.remove(this)
             delete this
         } else {
-            let other = this.checkHit()
-            if (other !== null){
-                other.element.classList.add('super-game-hit')
+            if (this.isGround()) {
+                const size = 100 + Math.round(Math.random() * 50)
                 this.game.ticker.remove(this)
-                delete this
+                this.element.className = 'game-explosion'
+                this.element.innerHTML = `<img src="${Image}" style="width: ${size}px; height: ${size}px" alt="bomba"/>`
             }
         }
     }
@@ -68,4 +78,4 @@ class Projectile {
     }
 }
 
-export default Projectile
+export default VerticalProjectile

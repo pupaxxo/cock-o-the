@@ -6,3 +6,9 @@
     border: 6px solid pink;
     position: absolute;
 }
+
+.game-explosion {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+}

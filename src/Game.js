@@ -5,19 +5,16 @@ import GameFinishChecker from './GameFinishChecker'
 import UIManager from './UIManager.js'
 import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
+import shootSFX from './assets/shootSFX.mp3'
 import PageParser from './PageParser'
 import Ticker from './Ticker'
+<<<<<<< HEAD
 import FallManager from './FallManager';
+=======
+import {base64ToArrayBuffer} from './Utils'
+import Multiplayer from './Multiplayer'
+>>>>>>> c8d1f38460767211551f6ca83702b42a770ae056
 
-const base64ToArrayBuffer = (base64) => {
-    let binaryString =  window.atob(base64);
-    let len = binaryString.length;
-    let bytes = new Uint8Array( len );
-    for (let i = 0; i < len; i++)        {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-}
 
 class Game {
 
@@ -30,7 +27,12 @@ class Game {
     homeFinder = null
     pageParser = null
     ticker = null
+<<<<<<< HEAD
     fallmanager = null;
+=======
+    multiplayer = null
+
+>>>>>>> c8d1f38460767211551f6ca83702b42a770ae056
     bgmusic = null
     audioCtx = null
     source = null
@@ -43,7 +45,8 @@ class Game {
     audioEnabled = true
 
     constructor() {
-        document.body.innerHTML += '<div id="game-container"><audio><source id="soundtrack-superdubstep" src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
+        document.body.innerHTML +=`<div id="game-container"><audio><source id="soundtrack-superdubstep" src="`
+            + bgmusic + `" type="audio/mpeg"><source id="super-sfx-shoot" src="` + shootSFX + `" type='audio/mpeg'></audio></div>`
 
         this.background = document.getElementById('super-background')
         this.bgmusic = document.getElementById('soundtrack-superdubstep').src.replace('data:audio/mpeg;base64,', '')
@@ -94,6 +97,7 @@ class Game {
         setTimeout(() => {
             this.pageParser = new PageParser(this)
             this.character = new Character(this)
+            this.multiplayer = new Multiplayer(this)
             this.ticker.add(this.character)
             this.gameFinishChecker = new GameFinishChecker(this)
             this.ticker.add(this.gameFinishChecker)

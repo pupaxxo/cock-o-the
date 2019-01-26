@@ -1,9 +1,31 @@
+/*
 .real-usable {
     background: linear-gradient(to right, #36992f 0%,#327208 17%,#128212 33%,#008a00 57%,#007c06 81%,#116000 100%);
+<<<<<<< HEAD
 }
 
 .fallable 
 {
    
     position: absolute;
+=======
+    z-index: 5000;
+    background-size: contain;
+    padding: .1em .1em;
+    text-align: center;
+    color: white;
+    border-radius: 2px;
+}
+*/
+
+.real-usable{
+    animation-name: sfondoFigo;
+    animation: sfondoFigo 0.2s linear 15;
+}
+
+@keyframes sfondoFigo {
+    50% {
+        opacity: 0;
+    }
+>>>>>>> c8d1f38460767211551f6ca83702b42a770ae056
 }

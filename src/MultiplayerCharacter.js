@@ -36,7 +36,7 @@ const keysToDirection = (key) => {
     }
 }
 
-class Character {
+class MultiplayerCharacter {
 
     game = null
 
@@ -54,6 +54,7 @@ class Character {
     direction = Directions.Left
     maxHeight = null
     maxWidth = null
+    id = null
 
     jumpingTicks = 0
     totalJumpTicks = 0
@@ -80,28 +81,16 @@ class Character {
         return real
     }
 
-    constructor(game) {
+    constructor(game, id, x, y) {
         this.game = game
+        this.id = id
         this.spriteChangeTicks = 20
-        document.getElementById('game-container').innerHTML += `<div class="game-character" id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
-        this.shootSFX = document.getElementById('super-sfx-shoot')
-        this.element = document.getElementById('game-character')
-        document.onkeydown = (e) => this.onKeyDown(e)
-        document.onkeyup = (e) => {
-            if ([Keys.ArrowLeft, Keys.ArrowRight].includes(e.keyCode) && this.direction === keysToDirection(e.keyCode)) {
-                this.currentSpeed = 0
-            }
-        }
-        window.onresize = () => {
-            this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
-            this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
-            this.fixPg()
-            this.reDraw()
-        }
-        this.maxWidth = document.documentElement.scrollWidth - this.element.offsetWidth
-        this.maxHeight = document.documentElement.scrollHeight - this.element.offsetHeight - this.element.offsetHeight - 10
-        this.x = this.maxWidth
-        this.y = this.maxHeight
+        document.getElementById('game-container').innerHTML += `<div class="game-character" id="game-character-${this.id}"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
+        this.source = this.game.audioCtx.createBufferSource()
+        this.shootSFX = document.getElementById('super-sfx-shoot').src.replace('data:audio/mpeg;base64,', '')
+        this.element = document.getElementById('game-character-' + this.id)
+        this.x = x
+        this.y = y
         this.reDraw()
     }
 
@@ -217,7 +206,6 @@ class Character {
             this.y += 5
         }
 
-        this.fixPg()
         this.reDraw()
     }
 
@@ -230,46 +218,37 @@ class Character {
         }
         this.lastDrawnX = this.x
         this.lastDrawnY = this.y
-        if (this.game.multiplayer)
-        this.game.multiplayer.emit({id: 'xy', x: this.x, y: this.y})
         this.element.style = `top: ${Math.round(this.y)}px; left: ${Math.round(this.x)}px`
-        fixElement(this.y, this.element.offsetHeight, window.innerHeight / 2, window.innerHeight / 3)
     }
 
-    onKeyDown(e) {
+    onKeyDown(keyCode) {
 
-        if (!Object.values(Keys).includes(e.keyCode)) {
-            console.log(e.keyCode + " <= tasto non conosciuto")
+        if (!Object.values(Keys).includes(keyCode)) {
+            console.log(keyCode + " <= tasto non conosciuto")
             return
         }
 
-        if (this.game.multiplayer) {
-            this.game.multiplayer.emit({id: 'key', code: e.keyCode})
-        }
-
-        e.preventDefault();
-
-        if ([Keys.ArrowUp, Keys.ArrowDown].includes(e.keyCode)) {
+        if ([Keys.ArrowUp, Keys.ArrowDown].includes(keyCode)) {
             return
         }
 
         // Stiamo andando già in questa direzione
-        if (this.direction === keysToDirection(e.keyCode) && this.currentSpeed === this.movementSpeed) return
+        if (this.direction === keysToDirection(keyCode) && this.currentSpeed === this.movementSpeed) return
 
-        if ([Keys.ArrowLeft, Keys.ArrowRight].includes(e.keyCode)) {
-            this.direction = keysToDirection(e.keyCode)
+        if ([Keys.ArrowLeft, Keys.ArrowRight].includes(keyCode)) {
+            this.direction = keysToDirection(keyCode)
             this.currentSpeed = this.movementSpeed
         }
 
-        if (e.keyCode === Keys.SpaceBar && this.jumpingTicks === 0) {
+        if (keyCode === Keys.SpaceBar && this.jumpingTicks === 0) {
             this.startJump()
         }
 
-        if (e.keyCode === Keys.D) {
+        if (keyCode === Keys.D) {
             this.addProjectile()
         }
 
-        if (e.keyCode === Keys.E) {
+        if (keyCode === Keys.E) {
             this.addVerticalProjectile()
         }
     }
@@ -279,17 +258,14 @@ class Character {
         this.y = clamp(this.y, 0, this.maxHeight)
     }
 
-    playSound(sound) {
-
-        this.game.audioCtx.suspend()
-        let audioElement = document.createElement('audio')
-        audioElement.appendChild(sound)
-        document.getElementById('game-container').appendChild(audioElement)
-        audioElement.play()
-        this.game.audioCtx.resume()
-
-
+    playSound(base64) {
+        if (this.game.audioEnabled)
+            this.game.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
+                this.source.buffer = buffer;
+                this.source.connect(this.game.audioCtx.destination);
+                this.source.start(0);
+            });
     }
 }
 
-export default Character
+export default MultiplayerCharacter
