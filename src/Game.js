@@ -1,6 +1,7 @@
 import Character from './Character'
 import './Game.css'
 import HomeFinder from './HomeFinder'
+import GameFinishChecker from './GameFinishChecker'
 import UIManager from './UIManager.js'
 import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
@@ -10,11 +11,13 @@ class Game {
     started = false
 
     goal = null
+    gameFinishChecker = null
     character = null
     UIManager = null
     homeFinder = null
 
-    delayBeforeStart = 2500
+    //delayBeforeStart = 2500
+    delayBeforeStart = 1
 
     constructor() {
         document.body.innerHTML += '<div id="game-container"><audio id="soundtrack-superdubstep"><source src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
@@ -45,12 +48,26 @@ class Game {
             left: 0,
             behavior: 'smooth'
         });
+        setTimeout(() => {
+            this.character = new Character()
+            this.gameFinishChecker = new GameFinishChecker(this)
+        }, this.delayBeforeStart)
     }
 
     stop() {
         this.started = false
         document.getElementById('game-container').remove()
         document.body.innerHTML += '<div id="game-container"></div>'
+    }
+
+    win() {
+        document.getElementById('game-container').innerHTML += `<div class="custom-made-modal">
+<h1>HAI VINTO!</h1>
+<button id="game-close">CHIUDI</button>
+</div>`
+        document.getElementById('game-close').onclick = () => {
+            this.stop()
+        }
     }
 }
 
