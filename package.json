@@ -24,6 +24,7 @@
     "deploy": "node deploy.js"
   },
   "dependencies": {
-    "animate.css": "^3.7.0"
+    "animate.css": "^3.7.0",
+    "file-loader": "^3.0.1"
   }
 }
