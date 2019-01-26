@@ -6,6 +6,7 @@ import Image4 from './assets/SVG/pollo_bocca_aperta.svg'
 import {clamp, fixElement, raycast, base64ToArrayBuffer} from './Utils'
 import BezierEasing from 'bezier-easing'
 import Projectile from './Projectile'
+import VerticalProjectile from './VerticalProjectile'
 
 const JUMP_TICKS = 60
 
@@ -60,6 +61,7 @@ class Character {
     verticalSpeed = 0
 
     boccaAperta = 0
+    boccaAperta2 = 0
 
     isGround() {
 
@@ -113,6 +115,12 @@ class Character {
         const projectile = new Projectile(this.x + (this.direction === 1 ? this.element.offsetWidth : 0), this.y + 10, 10, this.direction, this.game)
         this.game.ticker.add(projectile)
         this.boccaAperta = 30
+    }
+
+    addVerticalProjectile() {
+        const projectile = new VerticalProjectile(this.x + this.element.offsetWidth/2, this.y + this.element.offsetHeight, 10, 1, this.game)
+        this.game.ticker.add(projectile)
+        this.boccaAperta2 = 30
     }
 
     handleJump() {
@@ -179,6 +187,11 @@ class Character {
             this.boccaAperta --
         }
 
+        if (this.boccaAperta2 !== 0) {
+            img.src = Image3
+            this.boccaAperta2 --
+        }
+
         this.y += this.verticalSpeed
 
         if (this.jumpingTicks !== 0) {
@@ -194,7 +207,7 @@ class Character {
             if (this.jumpingTicks <= this.totalJumpTicks / 2) {
                 this.jumpingTicks = 0;
                 this.verticalSpeed = 0;
-                if (this.boccaAperta === 0) {
+                if (this.boccaAperta === 0 && this.boccaAperta2 === 0) {
                     img.src = Image
                 }
             }
@@ -248,6 +261,10 @@ class Character {
 
         if (e.keyCode === Keys.D) {
             this.addProjectile()
+        }
+
+        if (e.keyCode === Keys.E) {
+            this.addVerticalProjectile()
         }
     }
 
