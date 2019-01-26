@@ -1,5 +1,6 @@
 import './Projectile.css'
 import {raycast} from './Utils'
+import Image from './assets/SVG/bomba.svg'
 
 class VerticalProjectile {
 
@@ -64,8 +65,10 @@ class VerticalProjectile {
             delete this
         } else {
             if (this.isGround()) {
+                const size = 100 + Math.round(Math.random() * 50)
                 this.game.ticker.remove(this)
                 this.element.className = 'game-explosion'
+                this.element.innerHTML = `<img src="${Image}" style="width: ${size}px; height: ${size}px" alt="bomba"/>`
             }
         }
     }
