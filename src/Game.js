@@ -74,6 +74,7 @@ class Game {
         this.ticker = new Ticker(this)
         this.started = true
         this.UIManager = new UIManager()
+        this.UIManager.setTimerSeconds(60)
         this.goal = this.homeFinder.selectGoal()
         if (this.goal === false) {
             return
@@ -89,6 +90,8 @@ class Game {
             this.ticker.add(this.character)
             this.gameFinishChecker = new GameFinishChecker(this)
             this.ticker.add(this.gameFinishChecker)
+            this.ticker.add(this.UIManager)
+            this.UIManager.startTimer()
         }, this.delayBeforeStart)
 
         this.playSound(this.bgmusic)

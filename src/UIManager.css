@@ -1,7 +1,16 @@
 .game-time-container {
-    display: block;
     position: fixed;
     top: 50px;
     right: 50px;
     font-size: 10vmin;
+    border: 2px solid red;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 7000;
+    animation-duration: 1s !important;
 }

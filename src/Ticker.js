@@ -1,4 +1,4 @@
-const TPS = 60
+export const TPS = 60
 
 class Ticker {
 

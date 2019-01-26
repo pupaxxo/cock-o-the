@@ -1,25 +1,43 @@
 import './UIManager.css'
+import {TPS} from './Ticker'
 
 class UIManager {
 
     timerSeconds = 0
+    running = false
     timerContainer = null
+    timerExpired = false
 
     constructor() {
-        document.getElementById('game-container').innerHTML += `<div id="game-ui-container"><p class="animated bounceIn game-time-container">01:00</p></div>`
-        this.timerContainer = document.getElementById('game-time-container')
+        document.getElementById('game-container').innerHTML += `<div id="game-ui-container"><p id="super-game-timer" class="animated bounceIn game-time-container"></p></div>`
+        console.log(this.timerContainer)
+    }
+
+    setTimerSeconds(seconds) {
+        this.timerSeconds = seconds
+    }
+
+    startTimer(){
+        this.running = true
+    }
+
+    stopTimer() {
+        this.running = false
     }
 
     reDraw(){
-        this.timerContainer.innerText = this.timerSeconds
+        this.timerContainer = document.getElementById('super-game-timer')
+        //console.log(this.timerContainer)
+        this.timerContainer.innerHTML = Math.ceil(this.timerSeconds)
     }
 
-    startTimer(seconds){
-        this.timerSeconds = seconds
-        setInterval(() => {
-            this.timerSeconds--
+    tick(){
+        if (this.running) {
+            this.timerSeconds -= 1 / TPS
+            if (Math.ceil(this.timerSeconds) === 0)
+                this.timerExpired = true
             this.reDraw()
-        }, 1000)
+        }
     }
 }
 

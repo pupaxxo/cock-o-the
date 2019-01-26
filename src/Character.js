@@ -132,6 +132,10 @@ class Character {
 
         if (!this.game.started) return
 
+        if (this.game.UIManager.timerExpired){
+            this.game.stop()
+        }
+
         if (this.direction === Directions.Left) {
             this.x -= this.currentSpeed
         } else if (this.direction === Directions.Right) {
