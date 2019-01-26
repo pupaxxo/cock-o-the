@@ -133,7 +133,7 @@ class Character {
         if (!this.game.started) return
 
         if (this.game.UIManager.timerExpired){
-            this.game.stop()
+            this.game.lose()
         }
 
         if (this.direction === Directions.Left) {

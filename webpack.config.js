@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 const CleanWebpackPlugin = require("clean-webpack-plugin")
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -46,6 +47,7 @@ module.exports = {
     port: 9000
   },
   plugins: [
+      new CompressionPlugin(),
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebPackPlugin({
         template: './public/index.html',

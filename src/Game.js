@@ -102,6 +102,7 @@ class Game {
     }
 
     stop() {
+        document.body.parentNode.style='overflow: hidden'
         this.started = false
         document.getElementById('game-container').remove()
         document.body.innerHTML += '<div id="game-container"></div>'
@@ -126,6 +127,27 @@ class Game {
             behavior: 'smooth'
         });
     }
+
+    lose() {
+        const div = document.createElement('div')
+        div.className = 'win-game-modal-container'
+        div.innerHTML += `<div class="win-game-modal">
+<h1>Wow!</h1><h2>Non sei riuscito a tornare a casa...</h2>
+<button id="game-close">Riprova</button></div>`
+
+        document.body.parentNode.style='overflow: hidden'
+        this.stop()
+        document.getElementById('game-container').appendChild(div)
+        document.getElementById('game-close').onclick = () => {
+            this.start()
+        }
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+
+}
 
     playSound(base64) {
         if (this.audioEnabled)
