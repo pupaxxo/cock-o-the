@@ -34,6 +34,8 @@ const keysToDirection = (key) => {
 
 class Character {
 
+    game = null
+
     element = null
     x = 0
     y = 0
@@ -52,7 +54,7 @@ class Character {
     currentSpeed = 0
     verticalSpeed = 0
 
-    isGround(debug = false) {
+    isGround() {
 
         let range = Math.abs(this.verticalSpeed)
         if (range === 0) range = 5
@@ -68,7 +70,8 @@ class Character {
         return result[0]
     }
 
-    constructor() {
+    constructor(game) {
+        this.game = game
         document.getElementById('game-container').innerHTML += `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
@@ -99,7 +102,7 @@ class Character {
 
     handleJump() {
 
-        const speed = 20
+        const speed = 10
 
         if (this.jumpingTicks === this.totalJumpTicks) {
             this.verticalSpeed = -speed
@@ -111,19 +114,12 @@ class Character {
 
         const acceleration = speed/(this.totalJumpTicks/2)
 
-        /*const normalizedTick = this.jumpingTicks / this.totalJumpTicks
-        const f = BezierEasing(0.5, 1, 1, 0.5)
-        this.verticalSpeed = Math.round((f(normalizedTick) - 0.5) * this.jumpStrength);
-        this.jumpingTicks--
-        console.log(this.jumpingTicks <= this.totalJumpTicks/2, this.verticalSpeed)*/
-
         if (this.jumpingTicks <= this.totalJumpTicks/2) { // GIU
             this.verticalSpeed += acceleration
         } else { // SU
             this.verticalSpeed += acceleration
         }
 
-        console.log(this.verticalSpeed, acceleration, this.totalJumpTicks)
 
         this.jumpingTicks--
 
@@ -133,6 +129,9 @@ class Character {
     }
 
     tick() {
+
+        if (!this.game.started) return
+
         if (this.direction === Directions.Left) {
             this.x -= this.currentSpeed
         } else if (this.direction === Directions.Right) {
@@ -147,7 +146,6 @@ class Character {
 
         const ground = this.isGround()
         if (ground !== false) {
-            console.log(this.jumpingTicks, this.totalJumpTicks/2)
             if (this.jumpingTicks <= this.totalJumpTicks / 2) {
                 this.jumpingTicks = 0;
                 this.verticalSpeed = 0;

@@ -1,3 +1,33 @@
 html {
     scroll-behavior: smooth;
 }
+
+.win-game-modal {
+    width: 40vh;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 4px;
+    text-align: center;
+    padding: 1em;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.win-game-modal-container {
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+}
+
+#game-close {
+    background-color: #4277f4;
+    color: white;
+    padding: .5em 2em;
+    border-radius: 4px;
+    border: 0;
+}

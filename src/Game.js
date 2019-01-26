@@ -72,7 +72,7 @@ class Game {
         });
         setTimeout(() => {
             this.pageParser = new PageParser()
-            this.character = new Character()
+            this.character = new Character(this)
             this.gameFinishChecker = new GameFinishChecker(this)
         }, this.delayBeforeStart)
 
@@ -86,21 +86,31 @@ class Game {
     }
 
     win() {
-        document.getElementById('game-container').innerHTML += `<div class="custom-made-modal">
-<h1>HAI VINTO!</h1>
-<button id="game-close">CHIUDI</button>
-</div>`
+        const div = document.createElement('div')
+        div.className = 'win-game-modal-container'
+        div.innerHTML += `<div class="win-game-modal">
+<h1>Wow!</h1><h2>Sei riuscito a raggiungere casa!</h2>
+<button id="game-close">Continua</button></div>
+`
+        document.body.parentNode.style='overflow: hidden'
+        document.getElementById('game-container').appendChild(div)
         document.getElementById('game-close').onclick = () => {
             this.stop()
+            this.goal.click()
         }
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
     }
 
     playSound(base64) {
-        this.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
+        /*this.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
             this.source.buffer = buffer;
             this.source.connect(this.audioCtx.destination);
             this.source.start(0);
-        });
+        });*/
     }
 }
 

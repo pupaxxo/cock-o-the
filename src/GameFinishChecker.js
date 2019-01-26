@@ -1,11 +1,13 @@
 class GameFinishChecker {
     game = null
+    rip = false
     constructor(game) {
         this.game = game
         setInterval(() => this.tick(), 1000/20)
     }
 
     tick() {
+        if (this.rip) return
         const goal = this.game.goal.getBoundingClientRect()
         const goalY = goal.top + window.scrollY
         const goalX = goal.left + window.scrollY
@@ -15,6 +17,7 @@ class GameFinishChecker {
         const distance = Math.sqrt(Math.pow(goalX - characterPositionX, 2) + Math.pow(goalY - characterPositionY, 2))
         if (distance < 20) {
             this.game.win()
+            this.rip = true
         }
 
     }
