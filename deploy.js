@@ -1,4 +1,5 @@
 const zipFolder = require('zip-folder');
+const fs = require('fs')
 
 let folder = 'dist';
 let zipName = 'extension.zip';
