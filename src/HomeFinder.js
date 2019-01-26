@@ -57,7 +57,7 @@ class HomeFinder {
         return pos
     }
 
-    selectGoal() {
+    selectGoal(noClass = false) {
         let papabili = []
 
         let GGJ_homepage1 = document.querySelectorAll('body [href=\'/\'] , body [href=\'/it\'] , body [href=\'/en\'] ,' +
@@ -78,7 +78,9 @@ class HomeFinder {
             return false
         } else {
             const goal = papabili[HomeFinder.bestOfArray(papabili)]
-            goal.classList.add('goal', 'animated', 'wobble', 'infinite')
+            if (!noClass) {
+                goal.classList.add('goal', 'animated', 'wobble', 'infinite')
+            }
             return goal
         }
     }

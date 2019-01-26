@@ -1,5 +1,6 @@
 import './Character.css'
 import Image from './Character.svg'
+import Image2 from './Character2.svg'
 import {clamp, fixElement, raycast} from './Utils'
 import BezierEasing from 'bezier-easing'
 
@@ -45,6 +46,8 @@ class Character {
     movementSpeed = 13
     jumpStrength = 30
 
+    spriteChangeTicks = 0
+
     direction = Directions.Left
     maxHeight = null
     maxWidth = null
@@ -72,6 +75,7 @@ class Character {
 
     constructor(game) {
         this.game = game
+        this.spriteChangeTicks = 60
         document.getElementById('game-container').innerHTML += `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
@@ -136,6 +140,17 @@ class Character {
             this.x -= this.currentSpeed
         } else if (this.direction === Directions.Right) {
             this.x += this.currentSpeed
+
+        }
+
+        if (this.currentSpeed !== 0) {
+            this.spriteChangeTicks--
+        }
+
+        if (this.spriteChangeTicks === 0) {
+            const img = this.element.getElementsByTagName('img')[0]
+            img.src = img.src === Image ? Image2 : Image
+            this.spriteChangeTicks = 60
         }
 
         this.y += this.verticalSpeed

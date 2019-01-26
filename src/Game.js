@@ -43,7 +43,7 @@ class Game {
         this.audioCtx = new (window.AudioContext || window.webkitAudioContext)(); // define audio context
         this.source = this.audioCtx.createBufferSource(); // creates a sound source
 
-        window.onkeydown = (e) => {
+        /*window.onkeydown = (e) => {
             this.audioCtx.resume()
             if (this.started) {
                 if (e.keyCode === 82) { // S
@@ -54,13 +54,23 @@ class Game {
                     this.start()
                 }
             }
+        }*/
+
+        this.homeFinder = new HomeFinder()
+        this.goal = this.homeFinder.selectGoal(true)
+        const oldOnclick = this.goal.onclick
+        this.goal.onclick = (e) => {
+            if (this.started) return
+            e.preventDefault()
+            this.audioCtx.resume()
+            this.start()
+            this.goal.onclick = oldOnclick
         }
     }
 
     start() {
         this.started = true
         this.UIManager = new UIManager()
-        this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal()
         if (this.goal === false) {
             return
@@ -71,7 +81,7 @@ class Game {
             behavior: 'smooth'
         });
         setTimeout(() => {
-            this.pageParser = new PageParser()
+            this.pageParser = new PageParser(this)
             this.character = new Character(this)
             this.gameFinishChecker = new GameFinishChecker(this)
         }, this.delayBeforeStart)
