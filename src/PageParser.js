@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { styles } from "ansi-colors";
-=======
-import Enemy from './Enemy'
->>>>>>> c8d1f38460767211551f6ca83702b42a770ae056
 
 class PageParser {
 

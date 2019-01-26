@@ -8,12 +8,9 @@ import bgmusic from './assets/bgmusic.mp3'
 import shootSFX from './assets/shootSFX.mp3'
 import PageParser from './PageParser'
 import Ticker from './Ticker'
-<<<<<<< HEAD
 import FallManager from './FallManager';
-=======
 import {base64ToArrayBuffer} from './Utils'
 import Multiplayer from './Multiplayer'
->>>>>>> c8d1f38460767211551f6ca83702b42a770ae056
 
 
 class Game {
@@ -27,12 +24,8 @@ class Game {
     homeFinder = null
     pageParser = null
     ticker = null
-<<<<<<< HEAD
     fallmanager = null;
-=======
     multiplayer = null
-
->>>>>>> c8d1f38460767211551f6ca83702b42a770ae056
     bgmusic = null
     audioCtx = null
     source = null
@@ -66,7 +59,7 @@ class Game {
             }
         }*/
         
-        this.fallmanager = new FallManager(document.documentElement.scrollHeight);
+        //this.fallmanager = new FallManager(document.documentElement.scrollHeight);
         this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal(true)
         const oldOnclick = this.goal.onclick
@@ -103,7 +96,7 @@ class Game {
             this.ticker.add(this.gameFinishChecker)
             this.ticker.add(this.UIManager)
             this.UIManager.startTimer()
-            this.ticker.add(this.fallmanager)
+            //this.ticker.add(this.fallmanager)
         }, this.delayBeforeStart)
 
         this.playSound(this.bgmusic)
