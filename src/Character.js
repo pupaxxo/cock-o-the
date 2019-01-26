@@ -3,6 +3,7 @@ import Image from './Character.svg'
 import Image2 from './Character2.svg'
 import {clamp, fixElement, raycast} from './Utils'
 import BezierEasing from 'bezier-easing'
+import Projectile from './Projectile'
 
 const JUMP_TICKS = 60
 
@@ -12,7 +13,8 @@ const Keys = {
     ArrowDown: 40,
     ArrowUp: 38,
     SpaceBar: 32,
-    D: 68
+    D: 68,
+    E: 69
 }
 
 const Directions = {
@@ -98,6 +100,11 @@ class Character {
     startJump() {
         this.totalJumpTicks = JUMP_TICKS + 2 * Math.round((Math.random() * 15))
         this.jumpingTicks = this.totalJumpTicks
+    }
+
+    addProjectile() {
+        const projectile = new Projectile(this.x, this.y, 10, this.direction, this.game)
+        this.game.ticker.add(projectile)
     }
 
     handleJump() {
@@ -211,6 +218,10 @@ class Character {
 
         if (e.keyCode === Keys.SpaceBar && this.jumpingTicks === 0) {
             this.startJump()
+        }
+
+        if (e.keyCode === Keys.D) {
+            this.addProjectile()
         }
     }
 

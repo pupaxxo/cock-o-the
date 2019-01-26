@@ -78,7 +78,7 @@ class Game {
         this.ticker = new Ticker(this)
         this.started = true
         this.UIManager = new UIManager()
-        this.UIManager.setTimerSeconds(6)
+        this.UIManager.setTimerSeconds(600)
         this.goal = this.homeFinder.selectGoal()
         if (this.goal === false) {
             return

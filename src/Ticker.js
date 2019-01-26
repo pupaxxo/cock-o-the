@@ -22,6 +22,10 @@ class Ticker {
     add(obj) {
         this.tickers.push(obj)
     }
+
+    remove(obj) {
+        this.tickers = this.tickers.filter(a => a !== obj)
+    }
 }
 
 export default Ticker
