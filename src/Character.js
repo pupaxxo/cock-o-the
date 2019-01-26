@@ -3,7 +3,7 @@ import Image from './assets/SVG/pollo.svg'
 import Image2 from './assets/SVG/pollo_cammina.svg'
 import Image3 from './assets/SVG/pollo_volo.svg'
 import Image4 from './assets/SVG/pollo_bocca_aperta.svg'
-import {clamp, fixElement, raycast} from './Utils'
+import {clamp, fixElement, raycast, base64ToArrayBuffer} from './Utils'
 import BezierEasing from 'bezier-easing'
 import Projectile from './Projectile'
 import VerticalProjectile from './VerticalProjectile'
@@ -84,6 +84,8 @@ class Character {
         this.game = game
         this.spriteChangeTicks = 20
         document.getElementById('game-container').innerHTML += `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
+        this.source = this.game.audioCtx.createBufferSource()
+        this.shootSFX = document.getElementById('super-sfx-shoot').src.replace('data:audio/mpeg;base64,', '')
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
@@ -110,6 +112,7 @@ class Character {
     }
 
     addProjectile() {
+        this.playSound(this.shootSFX)
         const projectile = new Projectile(this.x + (this.direction === 1 ? this.element.offsetWidth : 0), this.y + 10, 10, this.direction, this.game)
         this.game.ticker.add(projectile)
         this.boccaAperta = 30
@@ -269,6 +272,15 @@ class Character {
     fixPg() {
         this.x = clamp(this.x, 0, this.maxWidth)
         this.y = clamp(this.y, 0, this.maxHeight)
+    }
+
+    playSound(base64) {
+        if (this.game.audioEnabled)
+            this.game.audioCtx.decodeAudioData(base64ToArrayBuffer(base64), (buffer) => {
+                this.source.buffer = buffer;
+                this.source.connect(this.game.audioCtx.destination);
+                this.source.start(0);
+            });
     }
 }
 

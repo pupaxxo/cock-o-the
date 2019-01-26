@@ -5,18 +5,11 @@ import GameFinishChecker from './GameFinishChecker'
 import UIManager from './UIManager.js'
 import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
+import shootSFX from './assets/shootSFX.mp3'
 import PageParser from './PageParser'
 import Ticker from './Ticker'
+import {base64ToArrayBuffer} from './Utils'
 
-const base64ToArrayBuffer = (base64) => {
-    let binaryString =  window.atob(base64);
-    let len = binaryString.length;
-    let bytes = new Uint8Array( len );
-    for (let i = 0; i < len; i++)        {
-        bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-}
 
 class Game {
 
@@ -42,7 +35,8 @@ class Game {
     audioEnabled = true
 
     constructor() {
-        document.body.innerHTML += '<div id="game-container"><audio><source id="soundtrack-superdubstep" src="' + bgmusic + '" type="audio/mpeg"></audio></div>'
+        document.body.innerHTML +=`<div id="game-container"><audio><source id="soundtrack-superdubstep" src="`
+            + bgmusic + `" type="audio/mpeg"><source id="super-sfx-shoot" src="` + bgmusic + `" type='audio/mpeg'></audio></div>`
 
         this.background = document.getElementById('super-background')
         this.bgmusic = document.getElementById('soundtrack-superdubstep').src.replace('data:audio/mpeg;base64,', '')
