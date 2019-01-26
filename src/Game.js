@@ -9,6 +9,7 @@ import shootSFX from './assets/shootSFX.mp3'
 import PageParser from './PageParser'
 import Ticker from './Ticker'
 import {base64ToArrayBuffer} from './Utils'
+import Multiplayer from './Multiplayer'
 
 
 class Game {
@@ -22,6 +23,7 @@ class Game {
     homeFinder = null
     pageParser = null
     ticker = null
+    multiplayer = null
 
     bgmusic = null
     audioCtx = null
@@ -85,6 +87,7 @@ class Game {
         setTimeout(() => {
             this.pageParser = new PageParser(this)
             this.character = new Character(this)
+            this.multiplayer = new Multiplayer(this)
             this.ticker.add(this.character)
             this.gameFinishChecker = new GameFinishChecker(this)
             this.ticker.add(this.gameFinishChecker)
