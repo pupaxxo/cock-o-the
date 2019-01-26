@@ -11,10 +11,15 @@ class Game {
 
     constructor() {
         document.body.innerHTML += '<div id="game-container"></div>'
-        document.onkeydown = (e) => {
-            if (this.started) return
-            if (e.keyCode === 83) {
-                this.start()
+        window.onkeydown = (e) => {
+            if (this.started) {
+                if (e.keyCode === 82) { // S
+                    this.stop()
+                }
+            } else {
+                if (e.keyCode === 83) { // R
+                    this.start()
+                }
             }
         }
     }
@@ -23,6 +28,12 @@ class Game {
         this.started = true
         this.character = new Character()
         this.homeFinder = new HomeFinder()
+    }
+
+    stop() {
+        this.started = false
+        document.getElementById('game-container').remove()
+        document.body.innerHTML += '<div id="game-container"></div>'
     }
 }
 
