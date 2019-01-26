@@ -1,12 +1,9 @@
 .real-usable {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    min-width: 40px;
-    display: inline-block;
     background: linear-gradient(to right, #36992f 0%,#327208 17%,#128212 33%,#008a00 57%,#007c06 81%,#116000 100%);
-    z-index: 5000;
-    background-size: contain;
-    padding: .1em .1em;
-    text-align: center;
-    color: white;
-    border-radius: 2px;
+}
+
+.fallable 
+{
+   
+    position: absolute;
 }

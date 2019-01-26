@@ -7,6 +7,7 @@ import Usable from './Usable.js'
 import bgmusic from './assets/bgmusic.mp3'
 import PageParser from './PageParser'
 import Ticker from './Ticker'
+import FallManager from './FallManager';
 
 const base64ToArrayBuffer = (base64) => {
     let binaryString =  window.atob(base64);
@@ -29,7 +30,7 @@ class Game {
     homeFinder = null
     pageParser = null
     ticker = null
-
+    fallmanager = null;
     bgmusic = null
     audioCtx = null
     source = null
@@ -61,7 +62,8 @@ class Game {
                 }
             }
         }*/
-
+        
+        this.fallmanager = new FallManager(document.documentElement.scrollHeight);
         this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal(true)
         const oldOnclick = this.goal.onclick
@@ -77,6 +79,7 @@ class Game {
     start() {
         this.ticker = new Ticker(this)
         this.started = true
+        
         this.UIManager = new UIManager()
         this.UIManager.setTimerSeconds(600)
         this.goal = this.homeFinder.selectGoal()
@@ -96,6 +99,7 @@ class Game {
             this.ticker.add(this.gameFinishChecker)
             this.ticker.add(this.UIManager)
             this.UIManager.startTimer()
+            this.ticker.add(this.fallmanager)
         }, this.delayBeforeStart)
 
         this.playSound(this.bgmusic)
@@ -157,6 +161,11 @@ class Game {
                 this.source.start(0);
             });
     }
+
+ 
+
 }
+
+
 
 export default Game

@@ -1,3 +1,5 @@
+import { styles } from "ansi-colors";
+
 class PageParser {
 
     constructor(game) {
@@ -16,9 +18,18 @@ class PageParser {
         }
         this.getAllTextNodes(skipFunction)
         this.getAllTextNodes(skipFunction)
+        this.getAllTextNodes(skipFunction)
+        this.getAllTextNodes(skipFunction)
         this.getAllTextNodes(skipFunction) // Don't ask .
     }
-
+    escapeHtml(text) {
+        return text
+            .replace('&', "&amp;")
+            .replace('<', "&lt;")
+            .replace('>', "&gt;")
+            .replace('"', '&quot;')
+            .replace("'", "&#039;");
+      }
 
     getAllTextNodes(skipFunction = null) {
         let nodes = []
@@ -36,15 +47,23 @@ class PageParser {
                 if (!elements[i].classList) elements[i].classList = []
                 elements[i].classList.add('usable')
             }
-            if (elements[i]['nodeName'] !== 'SCRIPT' && elements[i]['nodeName'] !== 'STYLE') {
+            if ( ( elements[i]["nodeName"] == 'SPAN') &&elements[i]["children"].length==0 )  {
+
+                  if (!elements[i].classList) elements[i].classList = []
+                  elements[i].classList.add('usable')
+                  continue;
+            }
+            if (elements[i]['nodeName'] !== 'SCRIPT' && elements[i]['nodeName'] !== 'STYLE' && !elements[i].classList.contains("usable") ) 
+             {
                 nodes.push(((elements[i]['childNodes'])))
-                for (let j = 0; j < elements[i]["childNodes"].length; j++) {
+                for (let j = 0; j < elements[i]["childNodes"].length; j++) { 
                     if (typeof elements[i]['childNodes'][j]['nodeName'] != 'undefined') {
-                        if (elements[i]['childNodes'][j]['nodeName'] === '#text') {
+                        if (elements[i]['childNodes'][j]['nodeName'] === '#text' || elements[i]['childNodes'][j]['nodeName'] === 'B'
+                        || elements[i]['childNodes'][j]['nodeName'] === 'STRONG') {
                             if (elements[i]['childNodes'][j]['textContent'].trim().length !== 0) {
-                                let textthathastobeputintospans = elements[i]['childNodes'][j]['textContent']
+                                let textthathastobeputintospans = elements[i]['childNodes'][j]['textContent'].replace('&nbsp;', ' ');
                                 if (skipFunction !== null && !skipFunction(elements[i])) continue
-                                elements[i].innerHTML = elements[i].innerHTML.replace(textthathastobeputintospans, '<span>' + textthathastobeputintospans + '</span>')
+                                elements[i].innerHTML = elements[i].innerHTML.replace('&nbsp;', ' ').replace(textthathastobeputintospans, '<span>' + textthathastobeputintospans + '</span>')
                                 if (!elements[i]['childNodes'][j]) continue
                                 if (typeof elements[i]['childNodes'][j].classList != 'undefined') {
                                     elements[i]['childNodes'][j].classList.add('usable')
@@ -73,6 +92,16 @@ class PageParser {
             a.classList.add('real-usable')
         })
     }
+
+    
+
+
+
+/*            this.ticker.add(this.UIManager)
+            this.ticker.add(this.setFallable)*/ 
 }
+
+
+
 
 export default PageParser
