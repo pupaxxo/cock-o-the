@@ -5,10 +5,12 @@
     background: #ffbc24;
     border: 6px solid pink;
     position: absolute;
+    z-index: 5000
 }
 
 .game-explosion {
     width: 100px;
     height: 100px;
     position: absolute;
+    z-index: 5000
 }

@@ -1,3 +1,4 @@
+
 html {
     scroll-behavior: smooth;
 }
@@ -11,6 +12,7 @@ html {
     padding: 1em;
     border: 1px solid #ddd;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    z-index: 5001
 }
 
 .win-game-modal-container {
@@ -24,6 +26,7 @@ html {
     top: 0;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    z-index: 5000
 }
 
 #game-close {

@@ -8,6 +8,7 @@ import bgmusic from './assets/bgmusic.mp3'
 import shootSFX from './assets/shootSFX.mp3'
 import PageParser from './PageParser'
 import Ticker from './Ticker'
+import FallManager from './FallManager';
 import {base64ToArrayBuffer} from './Utils'
 import Multiplayer from './Multiplayer'
 
@@ -23,8 +24,8 @@ class Game {
     homeFinder = null
     pageParser = null
     ticker = null
+    fallmanager = null;
     multiplayer = null
-
     bgmusic = null
     audioCtx = null
     source = null
@@ -73,6 +74,7 @@ class Game {
     start() {
         this.ticker = new Ticker(this)
         this.started = true
+        
         this.UIManager = new UIManager()
         this.UIManager.setTimerSeconds(60)
         this.goal = this.homeFinder.selectGoal()
@@ -85,6 +87,7 @@ class Game {
             behavior: 'smooth'
         });
         setTimeout(() => {
+            this.fallmanager = new FallManager();
             this.pageParser = new PageParser(this)
             this.character = new Character(this)
             this.multiplayer = new Multiplayer(this)
@@ -93,6 +96,7 @@ class Game {
             this.ticker.add(this.gameFinishChecker)
             this.ticker.add(this.UIManager)
             this.UIManager.startTimer()
+            this.ticker.add(this.fallmanager)
         }, this.delayBeforeStart)
 
         this.playSound(this.bgmusic)
@@ -154,6 +158,11 @@ class Game {
                 this.source.start(0);
             });
     }
+
+ 
+
 }
+
+
 
 export default Game
