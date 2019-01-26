@@ -60,14 +60,18 @@ class HomeFinder {
     selectGoal() {
         let papabili = []
 
-        let GGJ_homepage1 = document.querySelectorAll('[href=\'/\']')
+        let GGJ_homepage1 = document.querySelectorAll('body [href=\'/\'] , body [href=\'/it\'] , body [href=\'/en\'] ,' +
+            'body [href=\'//' + document.location.host + '\'] , body [href=\'' + document.location.origin + '\']')
         papabili = this.pushToArray(papabili, GGJ_homepage1)
 
-        let GGJ_homepage2 = document.querySelectorAll('[href=\'//' + document.location.host + '\']')
+        let GGJ_homepage2 = document.querySelectorAll('body [href=""] , body [class*=\'logo\'] > [href] , body [class*=\'home\'] > [href] ')
         papabili = this.pushToArray(papabili, GGJ_homepage2)
 
-        let GGJ_homepage3 = document.querySelectorAll('[href=\'' + document.location.origin + '\']')
+        let GGJ_homepage3 = document.querySelectorAll('body [href*=\'home\'] , body [href*=\'index\'] , body [href*=\'logo\'] , body [href*=\'principale\']')
         papabili = this.pushToArray(papabili, GGJ_homepage3)
+
+        let GGJ_homepage4 = document.querySelectorAll('body [href] > [src*=\'logo\'] , body [href] > [src*=\'home\']')
+        papabili = this.pushToArray(papabili, GGJ_homepage4)
 
         if (papabili.length === 0) {
             alert('Questo sito non ha una casa :c')
