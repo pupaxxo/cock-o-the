@@ -44,19 +44,6 @@ class HomeFinder {
         return yPosition
     }
 
-    static bestOfArray(array) {
-        let minY = HomeFinder.getPosition(array[0])
-        let pos = 0
-
-        for (let i = 0; i < array.length; i++) {
-            if (HomeFinder.getPosition(array[i]) < minY) {
-                minY = HomeFinder.getPosition(array[i])
-                pos = i
-            }
-        }
-        return pos
-    }
-
     selectGoal(noClass = false) {
         let papabili = []
 
@@ -73,16 +60,23 @@ class HomeFinder {
         let GGJ_homepage4 = document.querySelectorAll('body [href] > [src*=\'logo\'] , body [href] > [src*=\'home\']')
         papabili = this.pushToArray(papabili, GGJ_homepage4)
 
+        let goal =[];
+
         if (papabili.length === 0) {
             if (!noClass) {
                 alert('Questo sito non ha una casa :c')
             }
             return false
-        } else {
-            const goal = papabili[HomeFinder.bestOfArray(papabili)]
-            if (!noClass) {
-                goal.classList.add('goal', 'animated', 'wobble', 'infinite')
-            }
+        }
+        else {
+            papabili.forEach(i => {
+                goal.push(i)
+            })
+           /* if (!noClass) {
+                goal.forEach( i =>{
+                    i.classList.add('goal', 'animated', 'wobble', 'infinite')
+                })
+            } */
             return goal
         }
     }

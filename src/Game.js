@@ -38,7 +38,7 @@ class Game {
     audioEnabled = true
 
     constructor() {
-        document.body.innerHTML +=`<div id="game-container"><audio><source id="soundtrack-superdubstep" src="`
+        document.body.innerHTML += `<div id="game-container"><audio><source id="soundtrack-superdubstep" src="`
             + bgmusic + `" type="audio/mpeg"><source id="super-sfx-shoot" src="` + shootSFX + `" type='audio/mpeg'></audio></div>`
 
         this.background = document.getElementById('super-background')
@@ -61,13 +61,22 @@ class Game {
 
         this.homeFinder = new HomeFinder()
         this.goal = this.homeFinder.selectGoal(true)
-        const oldOnclick = this.goal.onclick
-        this.goal.onclick = (e) => {
-            if (this.started) return
-            e.preventDefault()
-            this.audioCtx.resume()
-            this.start()
-            this.goal.onclick = oldOnclick
+        let oldOnClick = []
+
+        this.goal.forEach(i => {
+            oldOnClick.push(i.onclick);
+        })
+
+        for (let i = 0; i < this.goal.length; i++) {
+            this.goal[i].onclick = (e) => {
+                if (this.started) return
+                e.preventDefault()
+                this.audioCtx.resume()
+                this.goal = this.goal[i];
+                this.goal.classList.add('goal', 'animated', 'wobble', 'infinite')
+                this.start()
+                this.goal.onclick = oldOnClick[i]
+            }
         }
     }
 
@@ -77,7 +86,6 @@ class Game {
         
         this.UIManager = new UIManager()
         this.UIManager.setTimerSeconds(60)
-        this.goal = this.homeFinder.selectGoal()
         if (this.goal === false) {
             return
         }
