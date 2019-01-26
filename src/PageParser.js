@@ -54,6 +54,20 @@ class PageParser {
             }
 
         }
+
+        const ele = Array.from(document.querySelectorAll('.usable')).filter(a => {
+            let el = a
+            while (el) {
+                let parent = el.parentElement;
+                if (parent && parent.className && parent.className.includes('usable')) return false
+                el = parent;
+            }
+            return true
+        })
+
+        ele.forEach(a => {
+            a.classList.add('real-usable')
+        })
     }
 }
 
