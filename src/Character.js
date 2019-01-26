@@ -43,8 +43,8 @@ class Character {
     lastDrawnX = 0
     lastDrawnY = 0
 
-    movementSpeed = 13
-    jumpStrength = 30
+    movementSpeed = 10
+    jumpStrength = 10
 
     spriteChangeTicks = 0
 
@@ -75,7 +75,7 @@ class Character {
 
     constructor(game) {
         this.game = game
-        this.spriteChangeTicks = 60
+        this.spriteChangeTicks = 30
         document.getElementById('game-container').innerHTML += `<div id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
@@ -106,7 +106,7 @@ class Character {
 
     handleJump() {
 
-        const speed = 10
+        const speed = this.jumpStrength
 
         if (this.jumpingTicks === this.totalJumpTicks) {
             this.verticalSpeed = -speed
@@ -150,7 +150,7 @@ class Character {
         if (this.spriteChangeTicks === 0) {
             const img = this.element.getElementsByTagName('img')[0]
             img.src = img.src === Image ? Image2 : Image
-            this.spriteChangeTicks = 60
+            this.spriteChangeTicks = 30
         }
 
         this.y += this.verticalSpeed
