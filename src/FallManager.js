@@ -37,6 +37,9 @@ class FallManager {
         if (Math.round(Math.random() * 50) === 25) {
             const elements = Array.from(document.querySelectorAll('.real-usable'))
             const element = elements[Math.round(Math.random() * elements.length)]
+            if (element.parentNode && element.parentNode.className && typeof element.parentNode.className === "string" && element.parentNode.className.includes('goal')) {
+                return
+            }
             const clonedElement = element.cloneNode(true)
             //document.getElementById('game-container').appendChild(clonedElement)
             this.container.appendChild(clonedElement)
