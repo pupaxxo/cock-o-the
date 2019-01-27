@@ -48,7 +48,7 @@ class HomeFinder {
         let papabili = []
 
         let GGJ_homepage1 = document.querySelectorAll('body [href=\'/\'] , body [href=\'/it\'] , body [href=\'/en\'] ,' +
-            'body [href=\'//' + document.location.host + '\'] , body [href=\'' + document.location.origin + '\']')
+            'body [href=\'//' + document.location.host + '\'] , body [href=\'' + document.location.origin + '\'], body [href=\'' + document.location.origin + '/\']')
         papabili = this.pushToArray(papabili, GGJ_homepage1)
 
         let GGJ_homepage2 = document.querySelectorAll('body [href=""] , body [class*=\'logo\'] > [href] , body [class*=\'home\'] > [href] ')

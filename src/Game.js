@@ -38,6 +38,9 @@ class Game {
 
     audioEnabled = true
 
+    oldBodyStyle = ''
+    oldHtmlStyle = ''
+
     constructor() {
         document.body.innerHTML += `<div id="game-container"><audio><source id="soundtrack-superdubstep" src="`
             + bgmusic + `" type="audio/mpeg"><source id="super-sfx-shoot" src="` + shootSFX + `" type='audio/mpeg'><source src='` + shitSFX +
@@ -83,6 +86,13 @@ class Game {
     }
 
     start() {
+
+        this.oldBodyStyle = document.body.style
+        this.oldHtmlStyle = document.body.parentNode.style
+
+        //document.body.parentNode.style = `height: ${document.body.offsetHeight}px !important; overflow: hidden`
+        //document.body.style = `height: ${document.body.offsetHeight}px !important; overflow: hidden`
+
         this.ticker = new Ticker(this)
         this.started = true
         
@@ -100,7 +110,7 @@ class Game {
             this.fallmanager = new FallManager();
             this.pageParser = new PageParser(this)
             this.character = new Character(this)
-            this.multiplayer = new Multiplayer(this)
+            //this.multiplayer = new Multiplayer(this)
             this.ticker.add(this.character)
             this.gameFinishChecker = new GameFinishChecker(this)
             this.ticker.add(this.gameFinishChecker)
@@ -113,6 +123,13 @@ class Game {
     }
 
     stop() {
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+        document.body.parentNode.style = this.oldHtmlStyle
+        document.body.style = this.oldBodyStyle
         document.body.parentNode.style='overflow: hidden'
         this.started = false
         document.getElementById('game-container').remove()

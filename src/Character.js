@@ -45,6 +45,7 @@ class Character {
     y = 0
     lastDrawnX = 0
     lastDrawnY = 0
+    lastAmmoDraw = 10
 
     movementSpeed = 10
     jumpStrength = 10
@@ -79,8 +80,7 @@ class Character {
             return false
         }
 
-        const real = result[0]
-        return real
+        return result[0]
     }
 
     constructor(game) {
@@ -232,8 +232,13 @@ class Character {
     }
 
     reDraw() {
-        if (this.game.UIManager.ammoContainer !== undefined && this.game.UIManager.ammoContainer !== null)
-            this.game.UIManager.ammoContainer.innerHTML = (this.availableVerticalProjectiles - this.counterVerticalProjectiles) //soluzione di merda
+        if (this.game.UIManager.ammoContainer !== undefined &&
+            this.game.UIManager.ammoContainer !== null) {
+            if (this.lastAmmoDraw !== this.availableVerticalProjectiles - this.counterVerticalProjectiles) {
+                this.lastAmmoDraw = this.availableVerticalProjectiles - this.counterVerticalProjectiles
+                this.game.UIManager.ammoContainer.innerHTML = (this.availableVerticalProjectiles - this.counterVerticalProjectiles) //soluzione di merda
+            }
+        }
         if (this.x === this.lastDrawnX && this.y === this.lastDrawnY) return
         if (this.direction === Directions.Right) {
             this.element.classList.add('flipped')

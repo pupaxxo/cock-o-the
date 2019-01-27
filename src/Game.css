@@ -46,3 +46,11 @@ html {
     z-index: 4500;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.falling-container {
+    min-width: 100vw;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}

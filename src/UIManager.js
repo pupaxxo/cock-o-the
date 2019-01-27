@@ -9,6 +9,7 @@ class UIManager {
     timerContainer = null
     ammoContainer = null
     timerExpired = false
+    drawnTimerSeconds = 0
 
     constructor() {
         document.getElementById('game-container').innerHTML += `<div id="game-ui-container"><p id="super-game-timer" class="animated bounceIn game-time-container"></p>
@@ -29,6 +30,8 @@ class UIManager {
     }
 
     reDraw(){
+        if (this.drawnTimerSeconds === Math.ceil(this.timerSeconds)) return
+        this.drawnTimerSeconds = Math.ceil(this.timerSeconds)
         this.timerContainer = document.getElementById('super-game-timer')
         this.ammoContainer = document.getElementById('super-game-ammo')
         this.timerContainer.innerHTML = Math.ceil(this.timerSeconds)
