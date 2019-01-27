@@ -110,7 +110,7 @@ Once you'll reach it, you will be redirect to the home page you were looking for
 ### How can I play? 
 
 Read the `How to use` section to install the game. You move the character using the `left` and `right` arrow keys. You can shoot
-eggs using the `E` key and the `D` key. The front facing shoot currently has not any useful function, it's just... beautiful. 
+eggs using the `E` key and the `D` key. The front facing shoot currently has not any useful function (yes, it sounds great, really great), it's just... beautiful. 
 The "bottom-facing" shoot allow you to jump higher (you'll have to be near the explosion). 
 
 ## Links
