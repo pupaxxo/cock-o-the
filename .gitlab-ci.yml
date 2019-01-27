@@ -15,7 +15,7 @@ deploy:
   script:
     - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
     - yarn build
-    - yarn deploy
+    - UPLOAD_TO_CHROME=true yarn deploy
 
 build:
   stage: build
@@ -24,6 +24,7 @@ build:
   script:
     - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
     - yarn build
+    - yarn deploy
   artifacts:
     paths:
       - extension.zip

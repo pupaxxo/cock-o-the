@@ -74,7 +74,15 @@ replace `http://localhost:9000/bundle.js` with the address where the compiled ja
 
 ### Use chrome extension
 
-Read adobe how to build a zip-compatible package for chrome that will auto-inject the bundle
+As we are waiting for Google to publish the extension, currently you'll have to follow these steps: 
+
+* Download the executable zip [here](https://git.shitware.xyz/team10/global-game-jam-2019/game/pipelines)
+* Extract the zip somewhere
+* Open chrome and go to `chrome://extensions`
+* Enable developer mode in the top-right of the page, if you haven't done yet
+* Click on `Upload a non packaged extension` (I don't know the exact english translation)
+* Select the folder in which you extracted the zip
+* Now open any webpage you want and try to reach the homepage :P
 
 # Team
 
