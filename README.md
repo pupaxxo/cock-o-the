@@ -30,7 +30,7 @@ const CLIENT_ID = '' // Chrome web store api client id
 
 ### Disclaimer
 
-We build this game in less than 48hours without sleeping during Global Game Jam 2019. 
+We built this game in less than 48hours without sleeping during Global Game Jam 2019. 
 We are seriously not responsible for any of the consequence caused to the reading of this code. 
 We will not answer any question about `How` or `Why`. We do not remember any of these things. 
 We also remember you that we are 4 young web developers, you can't expect high level game-technique/assets.
