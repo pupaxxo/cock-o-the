@@ -64,7 +64,7 @@ class HomeFinder {
 
         if (papabili.length === 0) {
             if (!noClass) {
-                alert('Questo sito non ha una casa :c')
+                //alert('Questo sito non ha una casa :c')
             }
             return false
         }
