@@ -67,6 +67,8 @@ class VerticalProjectile {
             if (this.isGround()) {
                 const size = 100 + Math.round(Math.random() * 50)
                 this.game.ticker.remove(this)
+                if (this.y - this.game.character.y < 250 )
+                    this.game.character.startJump(1.25)
                 this.element.className = 'game-explosion'
                 this.element.innerHTML = `<img src="${Image}" style="width: ${size}px; height: ${size}px" alt="bomba"/>`
             }

@@ -57,7 +57,7 @@ class Projectile {
             let other = this.checkHit()
             if (other !== null){
                 other.element.classList.add('super-game-hit')
-                this.game.ticker.remsove(this)
+                this.game.ticker.remove(this)
                 delete this
             }
         }

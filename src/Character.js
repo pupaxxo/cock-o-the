@@ -83,6 +83,7 @@ class Character {
     constructor(game) {
         this.game = game
         this.spriteChangeTicks = 20
+        this.jumpStrengthCoefficient = 1
         document.getElementById('game-container').innerHTML += `<div class="game-character" id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.shootSFX = document.getElementById('super-sfx-shoot')
         this.shitSFX = document.getElementById('super-sfx-shit')
@@ -106,7 +107,8 @@ class Character {
         this.reDraw()
     }
 
-    startJump() {
+    startJump(strengthCoefficient) {
+        this.jumpStrengthCoefficient = strengthCoefficient
         this.totalJumpTicks = JUMP_TICKS + 2 * Math.round((Math.random() * 15))
         this.jumpingTicks = this.totalJumpTicks
     }
@@ -127,7 +129,7 @@ class Character {
 
     handleJump() {
 
-        const speed = this.jumpStrength
+        const speed = this.jumpStrength * this.jumpStrengthCoefficient
 
         if (this.jumpingTicks === this.totalJumpTicks) {
             this.verticalSpeed = -speed
@@ -264,7 +266,7 @@ class Character {
         }
 
         if (e.keyCode === Keys.SpaceBar && this.jumpingTicks === 0) {
-            this.startJump()
+            this.startJump(1)
         }
 
         if (e.keyCode === Keys.D) {
