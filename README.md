@@ -4,6 +4,9 @@
 
 A game that can be played anywhere on the Internet, with as many levels as there are webpages :)
 
+![Logo Cock O' The](src/assets/LogoCockOThe.png)
+
+
 ## How to build
 
 * Run `yarn` to install all the needed deps
@@ -99,6 +102,6 @@ describe this role.
 Thanks to: 
 
 * [Global Game Jam 2019](https://globalgamejam.org/) for offering such a great experience! 🔝🔝🔝🔝🔝
-* [WebPack](https://webpack.js.org/) package images, mp3, svgs, javascript into just one file. Wonderful! Thank You!
+* [Webpack](https://webpack.js.org/) package images, mp3, svgs, javascript into just one file. Wonderful! Thank You!
 * [Babel](https://babeljs.io/) I can't no longer develop using old-style JavaScript, thank you!
 * All the libraries listed in the `package.json` file!
