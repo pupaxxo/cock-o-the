@@ -37,7 +37,7 @@ We also remember you that we are 4 young web developers, you can't expect high l
 
 ### Easy mode
 
-* Run `yarn dev` to start up a webserver on port `9000` that will host the javascript compiled bundle.   
+* Run `yarn dev` to start up a webserver on port `9000` that will host the javascript compiled bundle 
 * Open chrome and go to `chrome://extensions`
 * Enable developer mode in the top-right of the page, if you haven't done yet
 * Click on `Upload a non packaged extension` (I don't know the exact english translation)
@@ -93,7 +93,7 @@ As we are waiting for Google to publish the extension, currently you'll have to 
 * [Andrea Ruggiero](https://pupax.me) <andrea@ruggiero.top> (considered the lead developer)
 * Davide Volta (considered the lead designer)
 * Pietro Martocchi (considered the art director)
-* Andrea Ruggiero (considered the game advisor)
+* Michele Beccari (considered the game advisor)
 
 Note that roles were given using a random algorithm. We also do not know what game advisor mean, we will accept merge requests that 
 describe this role.
