@@ -33,6 +33,7 @@ const CLIENT_ID = '' // Chrome web store api client id
 We build this game in less than 48hours without sleeping during Global Game Jam 2019. 
 We are seriously not responsible for any of the consequence caused to the reading of this code. 
 We will not answer any question about `How` or `Why`. We do not remember any of these things. 
+We also remember you that we are 4 young web developers, you can't expect high level game-technique/assets.
 
 ### Easy mode
 
@@ -96,6 +97,11 @@ As we are waiting for Google to publish the extension, currently you'll have to 
 
 Note that roles were given using a random algorithm. We also do not know what game advisor mean, we will accept merge requests that 
 describe this role.
+
+# Links
+
+* [YouTube Trailer](https://www.youtube.com/watch?v=nZcWKU4iqyg&feature=youtu.be)
+* [Global Game Jam Page](https://globalgamejam.org/2019/games/cock-o)
 
 # Thanks
 
