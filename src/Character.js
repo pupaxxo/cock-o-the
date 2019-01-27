@@ -63,6 +63,9 @@ class Character {
     boccaAperta = 0
     boccaAperta2 = 0
 
+    counterVerticalProjectiles = 0
+    availableVerticalProjectiles = 10
+
     isGround() {
 
         let range = Math.abs(this.verticalSpeed)
@@ -121,10 +124,13 @@ class Character {
     }
 
     addVerticalProjectile() {
-        this.playSound(this.shitSFX)
-        const projectile = new VerticalProjectile(this.x + this.element.offsetWidth/2, this.y + this.element.offsetHeight, 10, 1, this.game)
-        this.game.ticker.add(projectile)
-        this.boccaAperta2 = 30
+        if( this.counterVerticalProjectiles < this.availableVerticalProjectiles ) {
+            this.playSound(this.shitSFX)
+            const projectile = new VerticalProjectile(this.x + this.element.offsetWidth / 2, this.y + this.element.offsetHeight, 10, 1, this.game)
+            this.game.ticker.add(projectile)
+            this.boccaAperta2 = 30
+            this.counterVerticalProjectiles++
+        }
     }
 
     handleJump() {
@@ -226,6 +232,8 @@ class Character {
     }
 
     reDraw() {
+        if (this.game.UIManager.ammoContainer !== undefined && this.game.UIManager.ammoContainer !== null)
+            this.game.UIManager.ammoContainer.innerHTML = (this.availableVerticalProjectiles - this.counterVerticalProjectiles) //soluzione di merda
         if (this.x === this.lastDrawnX && this.y === this.lastDrawnY) return
         if (this.direction === Directions.Right) {
             this.element.classList.add('flipped')

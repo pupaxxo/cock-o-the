@@ -14,3 +14,9 @@
     z-index: 7000;
     animation-duration: 1s !important;
 }
+
+#super-game-ammo {
+    position: fixed;
+    top: 300px;
+    right: 100px;
+}
