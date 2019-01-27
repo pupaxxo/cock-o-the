@@ -85,6 +85,7 @@ class Character {
         this.spriteChangeTicks = 20
         document.getElementById('game-container').innerHTML += `<div class="game-character" id="game-character"><img alt="game" style="width: 100%; height: 100%;" src="${Image}" /></div>`
         this.shootSFX = document.getElementById('super-sfx-shoot')
+        this.shitSFX = document.getElementById('super-sfx-shit')
         this.element = document.getElementById('game-character')
         document.onkeydown = (e) => this.onKeyDown(e)
         document.onkeyup = (e) => {
@@ -118,6 +119,7 @@ class Character {
     }
 
     addVerticalProjectile() {
+        this.playSound(this.shitSFX)
         const projectile = new VerticalProjectile(this.x + this.element.offsetWidth/2, this.y + this.element.offsetHeight, 10, 1, this.game)
         this.game.ticker.add(projectile)
         this.boccaAperta2 = 30
