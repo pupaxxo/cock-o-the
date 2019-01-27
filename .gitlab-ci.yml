@@ -4,14 +4,26 @@ before_script:
   - yarn
 
 stages:
+  - build
   - deploy
 
-deployExtension:
+deploy:
   stage: deploy
   when: manual
   only:
-    - master #to be invoked only on master merge
+    - master
   script:
     - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
     - yarn build
     - yarn deploy
+
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
+    - yarn build
+  artifacts:
+    paths:
+      - extension.zip

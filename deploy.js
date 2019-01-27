@@ -1,21 +1,26 @@
 const zipFolder = require('zip-folder');
 const fs = require('fs')
 
-let folder = 'dist';
-let zipName = 'extension.zip';
+const folder = 'dist';
+const zipName = 'extension.zip';
 
 // credentials and IDs from gitlab-ci.yml file (your appropriate config file)
-let REFRESH_TOKEN = process.env.REFRESH_TOKEN;
-let EXTENSION_ID = process.env.EXTENSION_ID;
-let CLIENT_SECRET = process.env.CLIENT_SECRET;
-let CLIENT_ID = process.env.CLIENT_ID;
+const UPLOAD_TO_CHROME = process.env.UPLOAD_TO_CHROME === 'true' || process.env.UPLOAD_TO_CHROME === true
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const EXTENSION_ID = process.env.EXTENSION_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const CLIENT_ID = process.env.CLIENT_ID;
 
-const webStore = require('chrome-webstore-upload')({
-    extensionId: EXTENSION_ID,
-    clientId: CLIENT_ID,
-    clientSecret: CLIENT_SECRET,
-    refreshToken: REFRESH_TOKEN
-});
+let webStore = null
+
+if (UPLOAD_TO_CHROME) {
+    webStore = require('chrome-webstore-upload')({
+        extensionId: EXTENSION_ID,
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN
+    });
+}
 
 // zipping the output folder
 zipFolder(folder, zipName, function (err) {
@@ -24,7 +29,9 @@ zipFolder(folder, zipName, function (err) {
         process.exit(1);
     } else {
         console.log(`Successfully Zipped ${folder} and saved as ${zipName}`);
-        uploadZip(); // on successful zipping, call upload
+        if (UPLOAD_TO_CHROME) {
+            uploadZip(); // on successful zipping, call upload
+        }
     }
 });
 
