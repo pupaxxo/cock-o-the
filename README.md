@@ -15,7 +15,7 @@ A game that can be played anywhere on the Internet, with as many levels as there
 
 ### Note
 
-If you pass these environments variable to deploy script, you can automatize
+If you pass these environments variable to deploy script, you can automate
 the deployment to the chrome web store
 
 ```js
@@ -30,22 +30,22 @@ const CLIENT_ID = '' // Chrome web store api client id
 
 ### Disclaimer
 
-We built this game in less than 48hours without sleeping during Global Game Jam 2019. 
-We are seriously not responsible for any of the consequence caused to the reading of this code. 
-We will not answer any question about `How` or `Why`. We do not remember any of these things. 
-We also remember you that we are 4 young web developers, you can't expect high level game-technique/assets.
+We built this game in less than 48 hours without sleeping during the Global Game Jam 2019. 
+We are seriously not responsible for any ill effect caused by reading our code. 
+We will not answer any question about `How` or `Why`. We do not know. 
+We would also like to point out that we are 4 young web developers, therefore I would not expect to see anything special.
 
 ### Easy mode
 
-* Run `yarn dev` to start up a webserver on port `9000` that will host the javascript compiled bundle 
-* Open chrome and go to `chrome://extensions`
-* Enable developer mode in the top-right of the page, if you haven't done yet
+* Run `yarn dev` to start up a webserver on port `9000` that will host the compiled javascript bundle 
+* Open Google Chrome and navigate to `chrome://extensions`
+* Enable developer mode in the top-right corner of the page, if you haven't done yet
 * Click on `Upload a non packaged extension` (I don't know the exact english translation)
 * Select the `test` folder
 * Enjoy :P
 
-Note that every time you apply a change to some js file, webpack will automatically recompile
-the javascript bundle. You will have to just reload the webpage
+Note that every time you modifyy a js file, webpack will automatically recompile
+the bundle. You will need to reload the webpage to see those changes take effect.
 
 Webpack will also automatically open a new tab pointing to localhost:9000 with the injected script. 
 You can modify this template applying changes to `public/index.html`
@@ -102,10 +102,10 @@ describe this role.
 
 ### How is this game related to the [Global Game Jam 2019 theme](https://globalgamejam.org/news/theme-global-game-jam-2019-%E2%80%A6)
 
-You are browsing the web and you'll find yourself blocked in a webpage with no return button. What will you start looking for? 
-We though you will start searching the "Home" button and so this is when the game start. You'll find yourself (the chicken :P)
-blocked at the bottom of the page and you'll start jumping around the elements of the page with the objective of reaching the home button.
-Once you'll reach it, you will be redirect to the home page you were looking for!
+You are browsing the web and you find yourself blocked in a webpage with no return button. What will you start looking for? 
+Maybe you'll start searching for a "Home" button... and that's when the game start. You'll find yourself (as a chicken :P)
+blocked at the bottom of the page and you'll need to start jumping around to reach the home button.
+Once you get there, you will be redirected to the home page you were looking for!
 
 ### How can I play? 
 
