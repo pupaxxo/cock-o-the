@@ -88,7 +88,7 @@ As we are waiting for Google to publish the extension, currently you'll have to 
 * Select the folder in which you extracted the zip
 * Now open any webpage you want and try to reach the homepage :P
 
-# Team
+## Team
 
 * [Andrea Ruggiero](https://pupax.me) <andrea@ruggiero.top> (considered the lead developer)
 * Davide Volta (considered the lead designer)
@@ -98,12 +98,27 @@ As we are waiting for Google to publish the extension, currently you'll have to 
 Note that roles were given using a random algorithm. We also do not know what game advisor mean, we will accept merge requests that 
 describe this role.
 
-# Links
+## FAQ
+
+### How is this game related to the [Global Game Jam 2019 theme](https://globalgamejam.org/news/theme-global-game-jam-2019-%E2%80%A6)
+
+You are browsing the web and you'll find yourself blocked in a webpage with no return button. What will you start looking for? 
+We though you will start searching the "Home" button and so this is when the game start. You'll find yourself (the chicken :P)
+blocked at the bottom of the page and you'll start jumping around the elements of the page with the objective of reaching the home button.
+Once you'll reach it, you will be redirect to the home page you were looking for!
+
+### How can I play? 
+
+Read the `How to use` section to install the game. You move the character using the left and right arrow keys. You can shoot
+eggs using the `E` key and the `D`. The front facing shoot currently has not any useful function, it's just... beautiful. 
+The "bottom-facing" shoot allow you to jump higher (you'll have to be near the explosion). 
+
+## Links
 
 * [YouTube Trailer](https://www.youtube.com/watch?v=nZcWKU4iqyg&feature=youtu.be)
 * [Global Game Jam Page](https://globalgamejam.org/2019/games/cock-o)
 
-# Thanks
+## Thanks
 
 Thanks to: 
 
