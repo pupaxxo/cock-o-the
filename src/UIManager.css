@@ -16,7 +16,17 @@
 }
 
 #super-game-ammo {
+    font-size: 1.5rem;
     position: fixed;
     top: 300px;
     right: 100px;
+}
+
+#super-game-ammo-svg{
+    display: inline-block;
+    right: 130px;
+    width: 50px !important;
+    height: 50px !important;
+    position: fixed;
+    top: 300px;
 }

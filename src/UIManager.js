@@ -1,5 +1,6 @@
 import './UIManager.css'
 import {TPS} from './Ticker'
+import ImageAmmo from './assets/SVG/ammo .svg'
 
 class UIManager {
 
@@ -11,7 +12,7 @@ class UIManager {
 
     constructor() {
         document.getElementById('game-container').innerHTML += `<div id="game-ui-container"><p id="super-game-timer" class="animated bounceIn game-time-container"></p>
-                                        </div><p id="super-game-ammo">10</p>`
+                                        </div><img id ="super-game-ammo-svg"alt="game" style="width: 100%; height: 100%;" src="${ImageAmmo}" /><p id="super-game-ammo">10</p>`
 
     }
 
