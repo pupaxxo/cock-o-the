@@ -13,7 +13,7 @@ deploy:
   only:
     - master
   script:
-    - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
+    - sed -i "s/%version%/$CI_PIPELINE_IID/" public/manifest.json
     - yarn build
     - UPLOAD_TO_CHROME=true yarn deploy
 
@@ -22,7 +22,7 @@ build:
   only:
     - master
   script:
-    - sed -i 's/%version%/$CI_PIPELINE_IID/' public/manifest.json
+    - sed -i "s/%version%/$CI_PIPELINE_IID/" public/manifest.json
     - yarn build
     - yarn deploy
   artifacts:
